@@ -32,8 +32,24 @@ const isPrime = (num) => {
   return primes[num];
 };
 
+// Get prime numbers in a specified range.
+const getPrimes = (start = 1, end = maxInt) => {
+  if (start < 1) throw new Error("Range start must be greater than 0.");
+  if (end > maxInt)
+    throw new Error(
+      `Range end value exceeds maximum value ${maxInt}. Specify an integer between 2 and ${maxInt}.`
+    );
+
+  const primesInRange = [];
+  for (let i = start; i <= end; i++) {
+    if (primes[i]) primesInRange.push(i);
+  }
+  return primesInRange;
+};
+
 // Export module.
 module.exports = {
   changeMaxInt,
   isPrime,
+  getPrimes,
 };
