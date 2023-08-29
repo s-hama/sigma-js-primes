@@ -19,13 +19,19 @@ $ npm i @sigma-js/primes
 const { isPrime, changeMaxInt } = require("../src/index.js");
 
 // By default, prime numbers can be determined up to a maximum of 8388607.
-isPrime(3) // Output: true
-isPrime(8) // Output: false
-isPrime(8388607) // Output: false
+isPrime(3); // Output: true
+isPrime(8); // Output: false
+isPrime(8388607); // Output: false
 
 // You can adjust the maximum value for prime number determination as needed.
-changeMaxInt(9999999);
+changeMaxInt(9999999); // Set the maximum value to 99999999
 isPrime(9999999); // Output: false
+
+// You can specify a range and get the prime numbers in that range.
+changeMaxInt(15); // Set the maximum value to 15
+getPrimes(); // Range: 1〜15, Output: [2, 3, 5, 7, 11, 13]
+getPrimes(10); // Range: 1〜10, Output: [2, 3, 5, 7]
+getPrimes(4, 12); // Range: 4〜10, Output: [5, 7, 11]
 ```
 
 ### License
