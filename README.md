@@ -15,9 +15,18 @@ $ npm i @sigma-js/primes
 
 ## Usage
 
+### JavaScript require
 ```js
-const { isPrime, changeMaxInt } = require("../src/index.js");
+const { changeMaxInt, isPrime, getPrimes … } = require("@sigma-js/primes");
+```
 
+### TypeScript import
+```js
+import { changeMaxInt, isPrime, getPrimes … } from "@sigma-js/primes";
+```
+
+### Example
+```js
 // By default, prime numbers can be determined up to a maximum of 8388607.
 isPrime(3); // Output: true
 isPrime(8); // Output: false
@@ -34,7 +43,7 @@ getPrimes(10); // Range: 1〜10, Output: [2, 3, 5, 7]
 getPrimes(4, 12); // Range: 4〜10, Output: [5, 7, 11]
 ```
 
-### License
+## License
 
 Copyright (c) 2023, [s-hama](https://github.com/s-hama).
 Released under the [MIT License](LICENSE).
