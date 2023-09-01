@@ -45,7 +45,7 @@ const getPrimes = (start = 1, end = maxInt) => {
   return primesInRange;
 };
 
-// Factorize a number into its prime factors using the precomputed primes list.
+// Factorize a number into prime factors.
 const getFactors = (num) => {
   if (num < 2 || num > maxInt)
     throw new Error(msgs.err2.replace('{0}', maxInt));
