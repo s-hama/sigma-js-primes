@@ -1,4 +1,4 @@
-const { isPrime, changeMaxInt, getPrimes } = require("../src/index.js");
+const { isPrime, changeMaxInt, getPrimes, getFactors } = require("../src/index.js");
 
 describe('Primes Functions', () => {
   describe('isPrime', () => {
@@ -68,6 +68,21 @@ describe('Primes Functions', () => {
   
     it('getPrimes with end exceeding maxInt throws an error', () => {
       expect(() => getPrimes(2, 8388608)).toThrowError(/Specify an integer between 2/);
+    });
+  });
+
+  describe('getFactors', () => {
+    beforeEach(() => {
+      changeMaxInt(555);
+    });
+    it('should return factors for a valid number', () => {
+      expect(getFactors(24)).toEqual([2, 2, 2, 3]); // 2 * 2 * 2 * 3 = 24
+      expect(getFactors(555)).toEqual([3, 5, 37]); // 3 * 5 * 37 = 555
+    });
+
+    it('should throw an error if a number out of range is given', () => {
+      expect(() => getFactors(1)).toThrowError(/exceeds the maximum/);
+      expect(() => getFactors(556)).toThrowError(/exceeds the maximum/);
     });
   });
 });
