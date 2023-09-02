@@ -18,9 +18,9 @@ const generatePrimes = () => {
 generatePrimes();
 
 // Re-generate the list of primes in the target range by re-setting the maximum value.
-const changeMaxInt = (newMaxInt) => {
-  if (newMaxInt < 1) throw new Error(msgs.err1);
-  maxInt = newMaxInt;
+const changeMaxInt = (num) => {
+  if (num < 1) throw new Error(msgs.err1);
+  maxInt = num;
   generatePrimes();
 };
 
