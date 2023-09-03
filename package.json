@@ -2,8 +2,16 @@
   "name": "@sigma-js/primes",
   "version": "0.0.6",
   "description": "provides prime arithmetic",
+  "keywords": ["math", "prime", "factors", "num", "number", "fast", "check", "is"],
   "main": "src/index.js",
-  "repository": "under preparation",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/s-hama/sigma-js-primes"
+  },
+  "homepage": "https://github.com/s-hama/sigma-js-primes",
+  "bugs": {
+    "url": "https://github.com/s-hama/sigma-js-primes/issues"
+  },
   "author": "s-hama",
   "license": "MIT",
   "private": false,
