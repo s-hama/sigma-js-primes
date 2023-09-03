@@ -88,4 +88,26 @@ describe('Primes Functions', () => {
       expect(() => getFactors(556)).toThrowError(getMsg('errNumericRange', ['Specified', 'less', 555]));
     });
   });
+  describe("getRandomPrime", () => {  
+    beforeEach(() => {
+      changeMaxInt(8388607);
+    });
+    it("should return a random prime within the specified range", () => {
+      const ret = getRandomPrime(1, 100);
+      expect(ret).toBeGreaterThanOrEqual(1);
+      expect(ret).toBeLessThanOrEqual(100);
+    });
+    it("should throw an error if getPrimes raises an exception", () => {
+      // msg: Starting number must be greater than or equal to 1.
+      expect(() => getRandomPrime(-10, 1)).toThrowError(getMsg('errNumericRange', ['Starting', 'greater', 1]));
+      // msg: Ending number must be less than or equal to 8388607.
+      expect(() => getRandomPrime(1, 8388608)).toThrowError(getMsg('errNumericRange', ['Ending', 'less', 8388607]));
+      // msg: Starting number must be less than or equal to 8388607.
+      expect(() => getRandomPrime(100, 1)).toThrowError(getMsg('errNumericRange', ['Starting', 'less', 'ending number']));
+    });
+    it("should throw an error if no prime numbers are found in the range", () => {
+      // msg: There are no prime numbers in the specified range.
+      expect(() => getRandomPrime(24, 28)).toThrowError(getMsg('errNoTarget', ['prime numbers', 'specified range']));
+    });
+  });
 });
