@@ -62,10 +62,25 @@ const getFactors = (num) => {
   return factors;
 };
 
+// Get a random prime number within the specified range.
+const getRandomPrime = (start = 1, end = maxInt) => {
+  let primesInRange = null;
+  try {
+    primesInRange = getPrimes(start, end);
+  } catch (e) {
+    throw e;
+  }
+  if (!primesInRange.length)
+    throw new Error(getMsg('errNoTarget', ['prime numbers', 'specified range']));
+
+  return primesInRange[Math.floor(Math.random() * primesInRange.length)];
+};
+
 // Export module.
 module.exports = {
   changeMaxInt,
   isPrime,
   getPrimes,
   getFactors,
+  getRandomPrime,
 };
