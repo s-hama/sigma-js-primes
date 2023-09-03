@@ -76,6 +76,26 @@ const getRandomPrime = (start = 1, end = maxInt) => {
   return primesInRange[Math.floor(Math.random() * primesInRange.length)];
 };
 
+// Get whether two integers are prime to each other.
+const isAreCoprime = (a, b) => {
+  if (a < 1 || b < 1)
+    throw new Error(getMsg('errNumericRange', ['Specified', 'greater', 1]));
+  if (a > maxInt || b > maxInt)
+    throw new Error(getMsg('errNumericRange', ['Specified', 'less', maxInt]));
+
+  // Use the greatest common divisor (GCD) to determine coprimality.
+  const gcd = (x, y) => {
+    while (y !== 0) {
+      const temp = y;
+      y = x % y;
+      x = temp;
+    }
+    return x;
+  };
+
+  return gcd(a, b) === 1;
+};
+
 // Export module.
 module.exports = {
   changeMaxInt,
@@ -83,4 +103,5 @@ module.exports = {
   getPrimes,
   getFactors,
   getRandomPrime,
+  isAreCoprime,
 };
