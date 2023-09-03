@@ -1,8 +1,15 @@
+// Define message.
 const msgs = {
-  err1: 'Maximum integer must be greater than 0.',
-  err2: 'The value exceeds the maximum of {0}.Please specify an integer greater than or equal to 2 and less than or equal to {0}.',
-  err3: 'Range start must be greater than 0.',
-  err4: 'Range end value exceeds maximum value ${0}. Specify an integer between 2 and ${0}.',
+  // replace: {0}: Specified/Starting/Ending, {1}: greater/less, {2}: 0/1/maxInt
+  errNumericRange: '{0} number must be {1} than or equal to {2}.',
 };
 
-module.exports = { msgs };
+// Get messages.
+const getMsg = (key, repArr = null) => {
+  const msg = msgs[key];
+  return repArr ? msg.replace(/{(\d+)}/g, (match, i) => {
+    return repArr[i] !== undefined ? repArr[i] : match;
+  }) : msg;
+};
+
+module.exports = { getMsg };
