@@ -4,10 +4,12 @@ declare module "@sigma-js/primes" {
   type GetPrimes = (start?: number, end?: number) => number[];
   type GetFactors = (num: number) => number[];
   type GetRandomPrime = (start?: number, end?: number) => number;
+  type IsAreCoprime = (a: number, b: number) => boolean;
 
   export const changeMaxInt: ChangeMaxInt;
   export const isPrime: IsPrime;
   export const getPrimes: GetPrimes;
   export const getFactors: GetFactors;
   export const getRandomPrime: GetRandomPrime;
+  export const isAreCoprime: IsAreCoprime;
 }
