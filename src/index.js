@@ -1,10 +1,9 @@
 const { getMsg } = require("./msgs.js");
 
-// Generate a list of prime numbers using the Sieve of Eratosthenes.
+// Generate a list of prime numbers using an optimized Sieve of Eratosthenes.
 let maxInt = 8388607;
-let primes = null;
+let primes = [];
 const genPrimes = () => {
-  // Generate a list of prime numbers in the target range.
   primes = new Array(maxInt + 1).fill(true);
   primes[0] = primes[1] = false;
   for (let i = 2; i * i <= maxInt; i++) {
@@ -14,6 +13,10 @@ const genPrimes = () => {
       }
     }
   }
+  primes = primes.reduce((result, isPrime, index) => {
+    if (isPrime) result.push(index);
+    return result;
+  }, []);
 };
 genPrimes();
 
@@ -28,7 +31,7 @@ const changeMaxInt = (num) => {
 const isPrime = (num) => {
   if (num < 2) return false;
   if (num > maxInt) throw new Error(getMsg('errNumericRange', ['Specified', 'less', maxInt]));
-  return primes[num];
+  return primes.includes(num);
 };
 
 // Get prime numbers in a specified range.
@@ -36,11 +39,8 @@ const getPrimes = (start = 1, end = maxInt) => {
   if (start < 1) throw new Error(getMsg('errNumericRange', ['Starting', 'greater', 1]));
   if (end > maxInt) throw new Error(getMsg('errNumericRange', ['Ending', 'less', maxInt]));
   if (start > end) throw new Error(getMsg('errNumericRange', ['Starting', 'less', 'ending number']));
-
-  const primesInRange = [];
-  for (let i = start; i <= end; i++) {
-    if (primes[i]) primesInRange.push(i);
-  }
+  
+  const primesInRange = primes.filter((prime) => prime >= start && prime <= end);
   return primesInRange;
 };
 
@@ -48,11 +48,11 @@ const getPrimes = (start = 1, end = maxInt) => {
 const getFactors = (num) => {
   if (num < 1) throw new Error(getMsg('errNumericRange', ['Specified', 'greater', 1]));
   if (num > maxInt) throw new Error(getMsg('errNumericRange', ['Specified', 'less', maxInt]));
-    
+  
   const factors = [];
   let divisor = 2;
   while (num > 1 && divisor <= num) {
-    if (primes[divisor] && num % divisor === 0) {
+    if (primes.includes(divisor) && num % divisor === 0) {
       factors.push(divisor);
       num /= divisor;
     } else {
@@ -64,16 +64,30 @@ const getFactors = (num) => {
 
 // Get a random prime number within the specified range.
 const getRandomPrime = (start = 1, end = maxInt) => {
-  let primesInRange = null;
-  try {
-    primesInRange = getPrimes(start, end);
-  } catch (e) {
-    throw e;
-  }
+  const primesInRange = getPrimes(start, end);
   if (!primesInRange.length)
     throw new Error(getMsg('errNoTarget', ['prime numbers', 'specified range']));
 
   return primesInRange[Math.floor(Math.random() * primesInRange.length)];
+};
+
+// Get whether two integers are prime to each other.
+const isAreCoprime = (a, b) => {
+  if (a < 1 || b < 1)
+    throw new Error(getMsg('errNumericRange', ['Specified', 'greater', 1]));
+  if (a > maxInt || b > maxInt)
+    throw new Error(getMsg('errNumericRange', ['Specified', 'less', maxInt]));
+
+  const gcd = (x, y) => {
+    while (y !== 0) {
+      const temp = y;
+      y = x % y;
+      x = temp;
+    }
+    return x;
+  };
+
+  return gcd(a, b) === 1;
 };
 
 // Export module.
@@ -83,4 +97,5 @@ module.exports = {
   getPrimes,
   getFactors,
   getRandomPrime,
+  isAreCoprime,
 };
