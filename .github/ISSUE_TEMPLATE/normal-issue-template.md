@@ -1,9 +1,9 @@
 ---
 name: Normal issue template
 about: Use as a normal Issue template
-title: ''
-labels: ''
-assignees: ''
+title: ""
+labels: ""
+assignees: ""
 
 ---
 
