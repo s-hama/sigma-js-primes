@@ -90,6 +90,16 @@ const isAreCoprime = (a, b) => {
   return gcd(a, b) === 1;
 };
 
+// Get the number of prime numbers in the specified range.
+const getPrimesCount = (start = 1, end = maxInt) => {
+  if (start < 1) throw new Error(getMsg('errNumericRange', ['Starting', 'greater', 1]));
+  if (end > maxInt) throw new Error(getMsg('errNumericRange', ['Ending', 'less', maxInt]));
+  if (start > end) throw new Error(getMsg('errNumericRange', ['Starting', 'less', 'ending number']));
+
+  const primesInRange = primes.filter((prime) => prime >= start && prime <= end);
+  return primesInRange.length;
+};
+
 // Export module.
 module.exports = {
   changeMaxInt,
@@ -98,4 +108,5 @@ module.exports = {
   getFactors,
   getRandomPrime,
   isAreCoprime,
+  getPrimesCount,
 };
