@@ -61,9 +61,9 @@ isAreCoprime(8, 12); // Output: false
 
 // You can get the number of prime numbers in a specified range.
 changeMaxInt(20); // Set the maximum value to 20
-getRandomPrime(); // Range: 1～20, Output: 8
-getRandomPrime(6); // Range: 6～20, Output: 5
-getRandomPrime(1, 10); // Range: 1～10, Output: 4
+getPrimesCount(); // Range: 1～20, Output: 8
+getPrimesCount(6); // Range: 6～20, Output: 5
+getPrimesCount(1, 10); // Range: 1～10, Output: 4
 ```
 
 ## License
