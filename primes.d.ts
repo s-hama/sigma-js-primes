@@ -1,4 +1,5 @@
 declare module "@sigma-js/primes" {
+  type GetMsg = (key: string, repArr?: (number | string)[]) => string;
   type ChangeMaxInt = (num: number) => void;
   type IsPrime = (num: number) => boolean;
   type GetPrimes = (start?: number, end?: number) => number[];
@@ -7,6 +8,7 @@ declare module "@sigma-js/primes" {
   type IsAreCoprime = (a: number, b: number) => boolean;
   type GetPrimesCount = (start?: number, end?: number) => number;
 
+  export const getMsg: GetMsg;
   export const changeMaxInt: ChangeMaxInt;
   export const isPrime: IsPrime;
   export const getPrimes: GetPrimes;

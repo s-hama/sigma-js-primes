@@ -1,5 +1,13 @@
-const { changeMaxInt, isPrime, getPrimes, getFactors, getRandomPrime, isAreCoprime, getPrimesCount } = require("../src/index.js");
-const { getMsg } = require("../src/msgs.js");
+const {
+  getMsg,
+  changeMaxInt,
+  isPrime,
+  getPrimes,
+  getFactors,
+  getRandomPrime,
+  isAreCoprime,
+  getPrimesCount,
+} = require("./primes.js");
 
 describe("Primes Functions", () => {
   describe("changeMaxInt", () => {
@@ -13,7 +21,9 @@ describe("Primes Functions", () => {
     });
     it("should throw an error for invalid newMaxInt", () => {
       // msg: Specified number must be greater than or equal to 1.
-      expect(() => changeMaxInt(0)).toThrowError(getMsg("errNumericRange", ["Specified", "greater", 1]));
+      expect(() => changeMaxInt(0)).toThrowError(
+        getMsg("errNumericRange", ["Specified", "greater", 1])
+      );
     });
   });
   describe("isPrime", () => {
@@ -39,7 +49,9 @@ describe("Primes Functions", () => {
     });
     it("should throw an error for values greater than maxInt", () => {
       // msg: Specified number must be less than or equal to 8388607.
-      expect(() => isPrime(8388608)).toThrowError(getMsg("errNumericRange", ["Specified", "less", 8388607]));
+      expect(() => isPrime(8388608)).toThrowError(
+        getMsg("errNumericRange", ["Specified", "less", 8388607])
+      );
     });
   });
   describe("getPrimes", () => {
@@ -56,19 +68,25 @@ describe("Primes Functions", () => {
     it("should get a prime number given start and end values", () => {
       const primeRange = getPrimes(10, 30);
       expect(primeRange).toEqual([11, 13, 17, 19, 23, 29]);
-    });  
+    });
     it("should throw an error if a starting value less than 1 is specified", () => {
       // msg: Starting number must be greater than or equal to 1.
-      expect(() => getPrimes(-5)).toThrowError(getMsg("errNumericRange", ["Starting", "greater", 1]));
+      expect(() => getPrimes(-5)).toThrowError(
+        getMsg("errNumericRange", ["Starting", "greater", 1])
+      );
     });
     it("should throw an error if an exit value greater than the maximum is specified", () => {
       changeMaxInt(8388607);
       // msg: Ending number must be less than or equal to 8388607.
-      expect(() => getPrimes(2, 8388608)).toThrowError(getMsg("errNumericRange", ["Ending", "less", 8388607]));
+      expect(() => getPrimes(2, 8388608)).toThrowError(
+        getMsg("errNumericRange", ["Ending", "less", 8388607])
+      );
     });
     it("should throw an error if a starting value is specified that is greater than the ending value", () => {
       // msg: Starting number must be less than or equal to ending number.
-      expect(() => getPrimes(100, 1)).toThrowError(getMsg("errNumericRange", ["Starting", "less", "ending number"]));
+      expect(() => getPrimes(100, 1)).toThrowError(
+        getMsg("errNumericRange", ["Starting", "less", "ending number"])
+      );
     });
   });
   describe("getFactors", () => {
@@ -81,14 +99,18 @@ describe("Primes Functions", () => {
     });
     it("should throw an error if the specified number is less than 1", () => {
       // msg: Specified number must be greater than or equal to 1.
-      expect(() => getFactors(0)).toThrowError(getMsg("errNumericRange", ["Specified", "greater", 1]));
+      expect(() => getFactors(0)).toThrowError(
+        getMsg("errNumericRange", ["Specified", "greater", 1])
+      );
     });
     it("should throw an error for values greater than maxInt", () => {
       // msg: Specified number must be less than or equal to 555.
-      expect(() => getFactors(556)).toThrowError(getMsg("errNumericRange", ["Specified", "less", 555]));
+      expect(() => getFactors(556)).toThrowError(
+        getMsg("errNumericRange", ["Specified", "less", 555])
+      );
     });
   });
-  describe("getRandomPrime", () => {  
+  describe("getRandomPrime", () => {
     beforeEach(() => {
       changeMaxInt(8388607);
     });
@@ -99,15 +121,23 @@ describe("Primes Functions", () => {
     });
     it("should throw an error if getPrimes raises an exception", () => {
       // msg: Starting number must be greater than or equal to 1.
-      expect(() => getRandomPrime(-10, 1)).toThrowError(getMsg("errNumericRange", ["Starting", "greater", 1]));
+      expect(() => getRandomPrime(-10, 1)).toThrowError(
+        getMsg("errNumericRange", ["Starting", "greater", 1])
+      );
       // msg: Ending number must be less than or equal to 8388607.
-      expect(() => getRandomPrime(1, 8388608)).toThrowError(getMsg("errNumericRange", ["Ending", "less", 8388607]));
+      expect(() => getRandomPrime(1, 8388608)).toThrowError(
+        getMsg("errNumericRange", ["Ending", "less", 8388607])
+      );
       // msg: Starting number must be less than or equal to 8388607.
-      expect(() => getRandomPrime(100, 1)).toThrowError(getMsg("errNumericRange", ["Starting", "less", "ending number"]));
+      expect(() => getRandomPrime(100, 1)).toThrowError(
+        getMsg("errNumericRange", ["Starting", "less", "ending number"])
+      );
     });
     it("should throw an error if no prime numbers are found in the range", () => {
       // msg: There are no prime numbers in the specified range.
-      expect(() => getRandomPrime(24, 28)).toThrowError(getMsg("errNoTarget", ["prime numbers", "specified range"]));
+      expect(() => getRandomPrime(24, 28)).toThrowError(
+        getMsg("errNoTarget", ["prime numbers", "specified range"])
+      );
     });
   });
   describe("isAreCoprime", () => {
@@ -130,13 +160,21 @@ describe("Primes Functions", () => {
     });
     it("should throw an error if the specified number is less than 1", () => {
       // msg: Specified number must be greater than or equal to 1.
-      expect(() => isAreCoprime(0, 5)).toThrowError(getMsg("errNumericRange", ["Specified", "greater", 1]));
-      expect(() => isAreCoprime(5, 0)).toThrowError(getMsg("errNumericRange", ["Specified", "greater", 1]));
+      expect(() => isAreCoprime(0, 5)).toThrowError(
+        getMsg("errNumericRange", ["Specified", "greater", 1])
+      );
+      expect(() => isAreCoprime(5, 0)).toThrowError(
+        getMsg("errNumericRange", ["Specified", "greater", 1])
+      );
     });
     it("should throw an error for values greater than maxInt", () => {
       // msg: Specified number must be less than or equal to 8388607.
-      expect(() => isAreCoprime(8388608, 1)).toThrowError(getMsg("errNumericRange", ["Specified", "less", 8388607]));
-      expect(() => isAreCoprime(1, 8388608)).toThrowError(getMsg("errNumericRange", ["Specified", "less", 8388607]));
+      expect(() => isAreCoprime(8388608, 1)).toThrowError(
+        getMsg("errNumericRange", ["Specified", "less", 8388607])
+      );
+      expect(() => isAreCoprime(1, 8388608)).toThrowError(
+        getMsg("errNumericRange", ["Specified", "less", 8388607])
+      );
     });
   });
   describe("getPrimesCount", () => {
@@ -150,11 +188,17 @@ describe("Primes Functions", () => {
     });
     it("should throw an error if getPrimesCount raises an exception", () => {
       // msg: Starting number must be greater than or equal to 1.
-      expect(() => getPrimesCount(0)).toThrowError(getMsg("errNumericRange", ["Starting", "greater", 1]));
+      expect(() => getPrimesCount(0)).toThrowError(
+        getMsg("errNumericRange", ["Starting", "greater", 1])
+      );
       // msg: Ending number must be less than or equal to 20.
-      expect(() => getPrimesCount(1, 21)).toThrowError(getMsg("errNumericRange", ["Ending", "less", 20]));
+      expect(() => getPrimesCount(1, 21)).toThrowError(
+        getMsg("errNumericRange", ["Ending", "less", 20])
+      );
       // msg: Starting number must be less than or equal to ending number.
-      expect(() => getPrimesCount(10, 5)).toThrowError(getMsg("errNumericRange", ["Starting", "less", "ending number"]));
+      expect(() => getPrimesCount(10, 5)).toThrowError(
+        getMsg("errNumericRange", ["Starting", "less", "ending number"])
+      );
     });
   });
 });
