@@ -1,9 +1,9 @@
 // Define message.
 const msgs = {
   // replace: {0}: Specified/Starting/Ending, {1}: greater/less, {2}: 0/1/maxInt
-  errNumericRange: '{0} number must be {1} than or equal to {2}.',
+  errNumericRange: "{0} number must be {1} than or equal to {2}.",
   // replace: {0}: prime numbers, {1}: specified range
-  errNoTarget: 'There are no {0} in the {1}.',
+  errNoTarget: "There are no {0} in the {1}.",
 };
 
 // Get messages.
