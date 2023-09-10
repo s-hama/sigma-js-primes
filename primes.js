@@ -1,5 +1,3 @@
-const { getMsg } = require("./msgs.js");
-
 // Generate a list of prime numbers using an optimized Sieve of Eratosthenes.
 let maxInt = 8388607;
 let primes = [];
@@ -19,6 +17,22 @@ const genPrimes = () => {
   }, []);
 };
 genPrimes();
+
+// Define message.
+const msgs = {
+  // replace: {0}: Specified/Starting/Ending, {1}: greater/less, {2}: 0/1/maxInt
+  errNumericRange: "{0} number must be {1} than or equal to {2}.",
+  // replace: {0}: prime numbers, {1}: specified range
+  errNoTarget: "There are no {0} in the {1}.",
+};
+
+// Get messages.
+const getMsg = (key, repArr = null) => {
+  const msg = msgs[key];
+  return repArr ? msg.replace(/{(\d+)}/g, (match, i) => {
+    return repArr[i] !== undefined ? repArr[i] : match;
+  }) : msg;
+};
 
 // Re-generate the list of primes in the target range by re-setting the maximum value.
 const changeMaxInt = (num) => {
@@ -102,6 +116,7 @@ const getPrimesCount = (start = 1, end = maxInt) => {
 
 // Export module.
 module.exports = {
+  getMsg,
   changeMaxInt,
   isPrime,
   getPrimes,
