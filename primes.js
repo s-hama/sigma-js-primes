@@ -137,6 +137,22 @@ const primes = (function () {
     return primesInRange.length;
   };
 
+  // Get a function that retrieves the index of a prime number within a specified range.
+  const getPrimeIndex = (num, start = 1, end = maxInt) => {
+    if (num < 1) throw new Error(getMsg('errNumericRange', ['Specified', 'greater', 1]));
+    if (num > maxInt) throw new Error(getMsg('errNumericRange', ['Specified', 'less', maxInt]));
+    if (start < 1) throw new Error(getMsg('errNumericRange', ['Starting', 'greater', 1]));
+    if (end > maxInt) throw new Error(getMsg('errNumericRange', ['Ending', 'less', maxInt]));
+    if (start > end) throw new Error(getMsg('errNumericRange', ['Starting', 'less', 'ending number']));
+  
+    const primesInRange = primes.filter((prime) => prime >= start && prime <= end);
+    const position = primesInRange.indexOf(num);
+    if (position === -1)
+      throw new Error(getMsg('errNoTarget', ['prime numbers', 'specified range']));
+  
+    return position + 1;
+  };
+
   return {
     getMsg,
     changeMaxInt,
@@ -146,6 +162,7 @@ const primes = (function () {
     getRandomPrime,
     isAreCoprime,
     getPrimesCount,
+    getPrimeIndex,
   };
 })();
 
