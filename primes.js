@@ -145,7 +145,7 @@ const primes = (function () {
     if (end > maxInt) throw new Error(getMsg('errNumericRange', ['Ending', 'less', maxInt]));
     if (start > end) throw new Error(getMsg('errNumericRange', ['Starting', 'less', 'ending number']));
   
-    const primesInRange = primes.filter((prime) => prime >= start && prime <= end);
+    const primesInRange = primeNums.filter((prime) => prime >= start && prime <= end);
     const position = primesInRange.indexOf(num);
     if (position === -1)
       throw new Error(getMsg('errNoTarget', ['prime numbers', 'specified range']));
