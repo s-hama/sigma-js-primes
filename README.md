@@ -64,6 +64,12 @@ changeMaxInt(20); // Set the maximum value to 20
 getPrimesCount(); // Range: 1～20, Output: 8
 getPrimesCount(6); // Range: 6～20, Output: 5
 getPrimesCount(1, 10); // Range: 1～10, Output: 4
+
+// You can get the correct index of prime numbers in a given range.
+changeMaxInt(25); // Set the maximum value to 25
+expect(getPrimeIndex(3)); // Range: 1～25, Output: 2
+expect(getPrimeIndex(17, 10)); // Range: 10～25, Output: 3
+expect(getPrimeIndex(2, 1, 10)); // Range: 1～10, Output: 1
 ```
 
 ## License
