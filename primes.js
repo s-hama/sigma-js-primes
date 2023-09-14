@@ -149,6 +149,14 @@ const primes = (function () {
     return position + 1;
   };
 
+  // Get the sum of prime numbers within the specified range.
+  const getPrimesSum = (start = 1, end = maxInt) => {
+    const primesInRange = getPrimes(start, end);
+    return primesInRange.length
+      ? primesInRange.reduce((acc, prime) => acc + prime, 0)
+      : 0;
+  };
+
   return {
     getMsg,
     changeMaxInt,
@@ -159,6 +167,7 @@ const primes = (function () {
     isAreCoprime,
     getPrimesCount,
     getPrimeIndex,
+    getPrimesSum,
   };
 })();
 
