@@ -8,6 +8,7 @@ const {
   isAreCoprime,
   getPrimesCount,
   getPrimeIndex,
+  getPrimesSum,
 } = require("./primes.js");
 
 describe("Primes Functions", () => {
@@ -255,6 +256,33 @@ describe("Primes Functions", () => {
       }).toThrowError(
         getMsg("errNoTarget", ["prime numbers", "specified range"])
       );
+    });
+  });
+  describe('getPrimesSum', () => {
+    beforeEach(() => {
+      changeMaxInt(30);
+    });
+    it('should get the sum of prime numbers within the specified range', () => {
+      expect(getPrimesSum()).toBe(129);
+      expect(getPrimesSum(25)).toBe(29);
+      expect(getPrimesSum(5, 30)).toBe(124);
+    });
+    it("should throw an error if getPrimesSum raises an exception", () => {
+      // msg: Starting number must be greater than or equal to 1.
+      expect(() => getPrimesSum(0)).toThrowError(
+        getMsg("errNumericRange", ["Starting", "greater", 1])
+      );
+      // msg: Ending number must be less than or equal to 30.
+      expect(() => getPrimesSum(1, 31)).toThrowError(
+        getMsg("errNumericRange", ["Ending", "less", 30])
+      );
+      // msg: Starting number must be less than or equal to ending number.
+      expect(() => getPrimesSum(100, 5)).toThrowError(
+        getMsg("errNumericRange", ["Starting", "less", "ending number"])
+      );
+    });
+    it("should get 0 if no prime number is found in the range", () => {
+      expect(getPrimesSum(14, 15)).toBe(0);
     });
   });
 });
