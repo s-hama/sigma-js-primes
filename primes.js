@@ -157,6 +157,21 @@ const primes = (function () {
       : 0;
   };
 
+  // Get the average of prime numbers within the specified range.
+  const getPrimesAverage = (start = 1, end = maxInt, places = 2) => {
+    if (places < 0)
+      throw new Error(
+        getMsg("errNumericRange", ["Decimal point position", "greater", 0])
+      );
+
+    const primesInRange = getPrimes(start, end);
+    const average = primesInRange.length
+      ? primesInRange.reduce((acc, prime) => acc + prime, 0) /
+        primesInRange.length
+      : 0;
+    return Number(average.toFixed(places));
+  };
+
   return {
     getMsg,
     changeMaxInt,
@@ -168,6 +183,7 @@ const primes = (function () {
     getPrimesCount,
     getPrimeIndex,
     getPrimesSum,
+    getPrimesAverage,
   };
 })();
 
