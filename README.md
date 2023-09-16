@@ -70,6 +70,12 @@ changeMaxInt(25); // Set the maximum value to 25
 expect(getPrimeIndex(3)); // Range: 1～25, Output: 2
 expect(getPrimeIndex(17, 10)); // Range: 10～25, Output: 3
 expect(getPrimeIndex(2, 1, 10)); // Range: 1～10, Output: 1
+
+// You can get the sum of prime numbers within a specified range.
+changeMaxInt(30); // Set the maximum value to 30
+getPrimesSum(); // Range: 1～30, Output: 129
+getPrimesSum(25); // Range: 25～30, Output: 29
+getPrimesSum(5, 30); // Range: 5～30, Output: 124
 ```
 
 ## License
