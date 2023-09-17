@@ -9,6 +9,7 @@ const {
   getPrimesCount,
   getPrimeIndex,
   getPrimesSum,
+  getPrimesAverage,
 } = require("./primes.js");
 
 describe("Primes Functions", () => {
@@ -283,6 +284,42 @@ describe("Primes Functions", () => {
     });
     it("should get 0 if no prime number is found in the range", () => {
       expect(getPrimesSum(14, 15)).toBe(0);
+    });
+  });
+  describe('getPrimesAverage', () => {
+    beforeEach(() => {
+      changeMaxInt(30);
+    });
+    it('should get the sum of prime numbers within the specified range', () => {
+      expect(getPrimesAverage()).toBe(12.9);
+      expect(getPrimesAverage(25)).toBe(29);
+      expect(getPrimesAverage(5, 30)).toBe(15.5);
+      expect(getPrimesAverage(1, 5, 9)).toBe(3.333333333);
+      expect(getPrimesAverage(5, 12, 9)).toBe(7.666666667);
+      expect(getPrimesAverage(5, 12, 0)).toBe(8);
+    });
+    it('should throw an error if the specified number is less than 0', () => {
+      // msg: Specified number must be greater than or equal to 0.
+      expect(() => getPrimesAverage(5, 12, -1)).toThrowError(
+        getMsg('errNumericRange', ['Decimal point position', 'greater', 0])
+      );
+    });
+    it("should throw an error if getPrimesAverage raises an exception", () => {
+      // msg: Starting number must be greater than or equal to 1.
+      expect(() => getPrimesAverage(0)).toThrowError(
+        getMsg("errNumericRange", ["Starting", "greater", 1])
+      );
+      // msg: Ending number must be less than or equal to 30.
+      expect(() => getPrimesAverage(1, 31)).toThrowError(
+        getMsg("errNumericRange", ["Ending", "less", 30])
+      );
+      // msg: Starting number must be less than or equal to ending number.
+      expect(() => getPrimesAverage(100, 5)).toThrowError(
+        getMsg("errNumericRange", ["Starting", "less", "ending number"])
+      );
+    });
+    it("should get 0 if no prime number is found in the range", () => {
+      expect(getPrimesAverage(14, 15)).toBe(0);
     });
   });
 });
