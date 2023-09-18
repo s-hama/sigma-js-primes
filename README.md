@@ -67,9 +67,9 @@ getPrimesCount(1, 10); // Range: 1～10, Output: 4
 
 // You can get the correct index of prime numbers in a given range.
 changeMaxInt(25); // Set the maximum value to 25
-expect(getPrimeIndex(3)); // Range: 1～25, Output: 2
-expect(getPrimeIndex(17, 10)); // Range: 10～25, Output: 3
-expect(getPrimeIndex(2, 1, 10)); // Range: 1～10, Output: 1
+expect(getPrimesIndex(3)); // Range: 1～25, Output: 2
+expect(getPrimesIndex(17, 10)); // Range: 10～25, Output: 3
+expect(getPrimesIndex(2, 1, 10)); // Range: 1～10, Output: 1
 
 // You can get the sum of prime numbers within a specified range.
 changeMaxInt(30); // Set the maximum value to 30

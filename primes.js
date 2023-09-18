@@ -129,7 +129,7 @@ const primes = (function () {
   };
 
   // Get a function that retrieves the index of a prime number within a specified range.
-  const getPrimeIndex = (num, start = 1, end = maxInt) => {
+  const getPrimesIndex = (num, start = 1, end = maxInt) => {
     if (num < 1)
       throw new Error(getMsg("errNumericRange", ["Specified", "greater", 1]));
     if (num > maxInt)
@@ -181,7 +181,7 @@ const primes = (function () {
     getRandomPrime,
     isAreCoprime,
     getPrimesCount,
-    getPrimeIndex,
+    getPrimesIndex,
     getPrimesSum,
     getPrimesAverage,
   };

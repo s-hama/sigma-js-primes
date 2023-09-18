@@ -7,7 +7,7 @@ const {
   getRandomPrime,
   isAreCoprime,
   getPrimesCount,
-  getPrimeIndex,
+  getPrimesIndex,
   getPrimesSum,
   getPrimesAverage,
 } = require("./primes.js");
@@ -210,50 +210,50 @@ describe("Primes Functions", () => {
       );
     });
   });
-  describe("getPrimeIndex", () => {
+  describe("getPrimesIndex", () => {
     beforeEach(() => {
       changeMaxInt(25);
     });
     it("should get the correct index of a prime number within a specified range", () => {
-      expect(getPrimeIndex(3)).toBe(2);
-      expect(getPrimeIndex(17, 10)).toBe(3);
-      expect(getPrimeIndex(2, 1, 10)).toBe(1);
+      expect(getPrimesIndex(3)).toBe(2);
+      expect(getPrimesIndex(17, 10)).toBe(3);
+      expect(getPrimesIndex(2, 1, 10)).toBe(1);
     });
     it("should throw an error if the specified number is less than 1", () => {
       // msg: Specified number must be greater than or equal to 1.
-      expect(() => getPrimeIndex(0)).toThrowError(
+      expect(() => getPrimesIndex(0)).toThrowError(
         getMsg("errNumericRange", ["Specified", "greater", 1])
       );
     });
     it("should throw an error for values greater than maxInt", () => {
       // msg: Specified number must be less than or equal to 555.
-      expect(() => getPrimeIndex(26)).toThrowError(
+      expect(() => getPrimesIndex(26)).toThrowError(
         getMsg("errNumericRange", ["Specified", "less", 25])
       );
     });
     it("should throw an error if getPrimesCount raises an exception", () => {
       // msg: Starting number must be greater than or equal to 1.
-      expect(() => getPrimeIndex(5, -5)).toThrowError(
+      expect(() => getPrimesIndex(5, -5)).toThrowError(
         getMsg("errNumericRange", ["Starting", "greater", 1])
       );
       // msg: Ending number must be less than or equal to 20.
-      expect(() => getPrimeIndex(5, 1, 26)).toThrowError(
+      expect(() => getPrimesIndex(5, 1, 26)).toThrowError(
         getMsg("errNumericRange", ["Ending", "less", 25])
       );
       // msg: Starting number must be less than or equal to ending number.
-      expect(() => getPrimeIndex(5, 20, 1)).toThrowError(
+      expect(() => getPrimesIndex(5, 20, 1)).toThrowError(
         getMsg("errNumericRange", ["Starting", "less", "ending number"])
       );
     });
     it("should throw an error if no prime numbers are found in the range", () => {
       // msg: There are no prime numbers in the specified range.
-      expect(() => getPrimeIndex(5, 24, 25)).toThrowError(
+      expect(() => getPrimesIndex(5, 24, 25)).toThrowError(
         getMsg("errNoTarget", ["prime numbers", "specified range"])
       );
     });
     it("should throw an error if the specified number is not a prime number", () => {
       expect(() => {
-        getPrimeIndex(4, 1, 10);
+        getPrimesIndex(4, 1, 10);
       }).toThrowError(
         getMsg("errNoTarget", ["prime numbers", "specified range"])
       );
