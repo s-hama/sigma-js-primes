@@ -129,7 +129,7 @@ const primes = (function () {
   };
 
   // Get a function that retrieves the index of a prime number within a specified range.
-  const getPrimeIndex = (num, start = 1, end = maxInt) => {
+  const getPrimesIndex = (num, start = 1, end = maxInt) => {
     if (num < 1)
       throw new Error(getMsg("errNumericRange", ["Specified", "greater", 1]));
     if (num > maxInt)
@@ -157,6 +157,21 @@ const primes = (function () {
       : 0;
   };
 
+  // Get the average of prime numbers within the specified range.
+  const getPrimesAverage = (start = 1, end = maxInt, places = 2) => {
+    if (places < 0)
+      throw new Error(
+        getMsg("errNumericRange", ["Decimal point position", "greater", 0])
+      );
+
+    const primesInRange = getPrimes(start, end);
+    const average = primesInRange.length
+      ? primesInRange.reduce((acc, prime) => acc + prime, 0) /
+        primesInRange.length
+      : 0;
+    return Number(average.toFixed(places));
+  };
+
   return {
     getMsg,
     changeMaxInt,
@@ -166,8 +181,9 @@ const primes = (function () {
     getRandomPrime,
     isAreCoprime,
     getPrimesCount,
-    getPrimeIndex,
+    getPrimesIndex,
     getPrimesSum,
+    getPrimesAverage,
   };
 })();
 

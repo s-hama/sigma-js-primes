@@ -7,8 +7,9 @@ declare module "@sigma-js/primes" {
   type GetRandomPrime = (start?: number, end?: number) => number;
   type IsAreCoprime = (a: number, b: number) => boolean;
   type GetPrimesCount = (start?: number, end?: number) => number;
-  type GetPrimeIndex = (start?: number, end?: number) => number;
+  type GetPrimesIndex = (start?: number, end?: number) => number;
   type GetPrimesSum = (start?: number, end?: number) => number;
+  type GetPrimesAverage = (start?: number, end?: number, places?: number) => number;
 
   export const getMsg: GetMsg;
   export const changeMaxInt: ChangeMaxInt;
@@ -18,6 +19,7 @@ declare module "@sigma-js/primes" {
   export const getRandomPrime: GetRandomPrime;
   export const isAreCoprime: IsAreCoprime;
   export const getPrimesCount: GetPrimesCount;
-  export const getPrimeIndex: GetPrimeIndex;
+  export const getPrimesIndex: GetPrimesIndex;
   export const getPrimesSum: GetPrimesSum;
+  export const getPrimesAverage: GetPrimesAverage;
 }
