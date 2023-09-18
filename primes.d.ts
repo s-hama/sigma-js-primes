@@ -9,6 +9,7 @@ declare module "@sigma-js/primes" {
   type GetPrimesCount = (start?: number, end?: number) => number;
   type GetPrimesIndex = (start?: number, end?: number) => number;
   type GetPrimesSum = (start?: number, end?: number) => number;
+  type GetPrimesAverage = (start?: number, end?: number, places?: number) => number;
 
   export const getMsg: GetMsg;
   export const changeMaxInt: ChangeMaxInt;
@@ -20,4 +21,5 @@ declare module "@sigma-js/primes" {
   export const getPrimesCount: GetPrimesCount;
   export const getPrimesIndex: GetPrimesIndex;
   export const getPrimesSum: GetPrimesSum;
+  export const getPrimesAverage: GetPrimesAverage;
 }
