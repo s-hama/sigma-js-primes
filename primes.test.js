@@ -10,6 +10,7 @@ const {
   getPrimesIndex,
   getPrimesSum,
   getPrimesAverage,
+  getPrimesMedian,
 } = require("./primes.js");
 
 describe("Primes Functions", () => {
@@ -320,6 +321,34 @@ describe("Primes Functions", () => {
     });
     it("should get 0 if no prime number is found in the range", () => {
       expect(getPrimesAverage(14, 15)).toBe(0);
+    });
+  });
+  describe("getPrimesMedian", () => {
+    beforeEach(() => {
+      changeMaxInt(100);
+    });
+    it("should get 0 if no prime number is found in the range", () => {
+      expect(getPrimesMedian(80, 82)).toBe(0);
+    });
+    it("should get the median of prime numbers within the specified range", () => {
+      expect(getPrimesMedian()).toBe(41);
+      expect(getPrimesMedian(25)).toBe(60);
+      expect(getPrimesMedian(5, 34)).toBe(17);
+      expect(getPrimesMedian(5, 50)).toBe(23);
+    });
+    it("should throw an error if getPrimesMedian raises an exception", () => {
+      // msg: Starting number must be greater than or equal to 1.
+      expect(() => getPrimesMedian(0)).toThrowError(
+        getMsg("errNumericRange", ["Starting", "greater", 1])
+      );
+      // msg: Ending number must be less than or equal to 30.
+      expect(() => getPrimesMedian(1, 101)).toThrowError(
+        getMsg("errNumericRange", ["Ending", "less", 100])
+      );
+      // msg: Starting number must be less than or equal to ending number.
+      expect(() => getPrimesMedian(100, 5)).toThrowError(
+        getMsg("errNumericRange", ["Starting", "less", "ending number"])
+      );
     });
   });
 });
