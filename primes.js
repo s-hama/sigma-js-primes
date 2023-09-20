@@ -180,10 +180,10 @@ const primes = (function () {
     if (length % 2 === 0) {
       const midIndex1 = length / 2 - 1;
       const midIndex2 = length / 2;
-      return (sortedPrimes[midIndex1] + sortedPrimes[midIndex2]) / 2;
+      return (primesInRange[midIndex1] + primesInRange[midIndex2]) / 2;
     } else {
-      const midIndex = Math.floor(len / 2);
-      return sortedPrimes[midIndex];
+      const midIndex = Math.floor(length / 2);
+      return primesInRange[midIndex];
     }
   };
 
