@@ -85,6 +85,13 @@ getPrimesAverage(5, 30); // Range: 5～30, Rounded to third decimal places, Outp
 getPrimesAverage(1, 5, 9); // Range: 1～5, Rounded to the ninth decimal place, Output: 3.333333333
 getPrimesAverage(5, 12, 9); // Range: 5～12, Rounded to the ninth decimal place, Output: 7.666666667
 getPrimesAverage(5, 12, 0); // Range: 5～12, Rounded to the first decimal place, Output: 8
+
+// You can get the number of prime numbers in a specified range.
+changeMaxInt(100); // Set the maximum value to 100
+getPrimesMedian(); // Range: 1～100, Output: 41
+getPrimesMedian(25); // Range: 25～100, Output: 60
+getPrimesMedian(5, 34); // Range: 5～34, Output: 17
+getPrimesMedian(5, 50); // Range: 5～50, Output: 23
 ```
 
 ## License

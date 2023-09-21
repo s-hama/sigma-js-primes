@@ -172,6 +172,21 @@ const primes = (function () {
     return Number(average.toFixed(places));
   };
 
+  // Get the median of the prime numbers within the specified range.
+  const getPrimesMedian = (start = 1, end = maxInt, places = 2) => {
+    const primesInRange = getPrimes(start, end);
+    const length = primesInRange.length;
+    if (!length) return 0;
+    if (length % 2 === 0) {
+      const midIndex1 = length / 2 - 1;
+      const midIndex2 = length / 2;
+      return (primesInRange[midIndex1] + primesInRange[midIndex2]) / 2;
+    } else {
+      const midIndex = Math.floor(length / 2);
+      return primesInRange[midIndex];
+    }
+  };
+
   return {
     getMsg,
     changeMaxInt,
@@ -184,6 +199,7 @@ const primes = (function () {
     getPrimesIndex,
     getPrimesSum,
     getPrimesAverage,
+    getPrimesMedian,
   };
 })();
 
