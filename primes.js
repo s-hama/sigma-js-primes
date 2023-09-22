@@ -187,6 +187,22 @@ const primes = (function () {
     }
   };
 
+  // Get the twin prime numbers within the specified range
+  const getPrimesTwins = (start = 1, end = maxInt) => {
+    const primesInRange = primes.getPrimes(start, end);
+    if (!primesInRange.length)
+      throw new Error(
+        getMsg("errNoTarget", ["prime numbers", "specified range"])
+      );
+
+    return primesInRange.reduce((twin, num, index, arr) => {
+      if (index < arr.length - 1 && arr[index + 1] - num === 2) {
+        twin.push([num, arr[index + 1]]);
+      }
+      return twin;
+    }, []);
+  };
+
   return {
     getMsg,
     changeMaxInt,
@@ -200,6 +216,7 @@ const primes = (function () {
     getPrimesSum,
     getPrimesAverage,
     getPrimesMedian,
+    getPrimesTwins,
   };
 })();
 
