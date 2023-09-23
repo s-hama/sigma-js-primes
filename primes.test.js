@@ -11,6 +11,7 @@ const {
   getPrimesSum,
   getPrimesAverage,
   getPrimesMedian,
+  getPrimesTwins,
 } = require("./primes.js");
 
 describe("Primes Functions", () => {
@@ -348,6 +349,37 @@ describe("Primes Functions", () => {
       // msg: Starting number must be less than or equal to ending number.
       expect(() => getPrimesMedian(100, 5)).toThrowError(
         getMsg("errNumericRange", ["Starting", "less", "ending number"])
+      );
+    });
+  });
+  describe("getPrimesTwins", () => {
+    beforeEach(() => {
+      changeMaxInt(20);
+    });
+    it("should get the twin prime numbers within the specified range", () => {
+      expect(getPrimesTwins()).toEqual([[3, 5],[5, 7],[11, 13],[17, 19]]);
+      expect(getPrimesTwins(6)).toEqual([[11, 13],[17, 19]]);
+      expect(getPrimesTwins(1, 10)).toEqual([[3, 5],[5, 7]]);
+      expect(getPrimesTwins(3, 4)).toEqual([]);
+    });
+    it("should throw an error if getPrimesTwins raises an exception", () => {
+      // msg: Starting number must be greater than or equal to 1.
+      expect(() => getPrimesTwins(0)).toThrowError(
+        getMsg("errNumericRange", ["Starting", "greater", 1])
+      );
+      // msg: Ending number must be less than or equal to 20.
+      expect(() => getPrimesTwins(1, 21)).toThrowError(
+        getMsg("errNumericRange", ["Ending", "less", 20])
+      );
+      // msg: Starting number must be less than or equal to ending number.
+      expect(() => getPrimesTwins(10, 5)).toThrowError(
+        getMsg("errNumericRange", ["Starting", "less", "ending number"])
+      );
+    });
+    it("should throw an error if no prime numbers are found in the range", () => {
+      // msg: There are no prime numbers in the specified range.
+      expect(() => getPrimesTwins(14, 15)).toThrowError(
+        getMsg("errNoTarget", ["prime numbers", "specified range"])
       );
     });
   });
