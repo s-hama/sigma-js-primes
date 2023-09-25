@@ -173,7 +173,7 @@ const primes = (function () {
   };
 
   // Get the median of the prime numbers within the specified range.
-  const getPrimesMedian = (start = 1, end = maxInt, places = 2) => {
+  const getPrimesMedian = (start = 1, end = maxInt) => {
     const primesInRange = getPrimes(start, end);
     const length = primesInRange.length;
     if (!length) return 0;
