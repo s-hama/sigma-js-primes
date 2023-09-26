@@ -99,6 +99,11 @@ getPrimesTwins(); // Range: 1～20, Output: [[3, 5],[5, 7],[11, 13],[17, 19]]
 getPrimesTwins(6); // Range: 6～20, Output: [[11, 13],[17, 19]]
 getPrimesTwins(1, 10); // Range: 1～10, Output: [[3, 5],[5, 7]]
 getPrimesTwins(3, 4); // Range: 3～4, Output: []
+
+// You can get the prime factorization result of the specified number using a formula.
+getFactorsFormula(24); // Output: "2^3*3"
+getFactorsFormula(30); // Output: "2*3*5"
+getFactorsFormula(7); // Output: "7"
 ```
 
 ## License
