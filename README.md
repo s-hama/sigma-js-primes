@@ -44,7 +44,6 @@ getPrimes(10); // Range: 1～10, Output: [2, 3, 5, 7]
 getPrimes(4, 12); // Range: 4～12, Output: [5, 7, 11]
 
 // You can obtain the prime factorization result of the specified number.
-changeMaxInt(1000); // Set the maximum value to 1000
 getFactors(24); // Output: [2, 2, 2, 3]
 getFactors(555); // Output: [3, 5, 37]
 
@@ -55,7 +54,6 @@ getRandomPrime(10); // Range: 1～10, Output: 7
 getRandomPrime(4, 12); // Range: 4～12, Output: 5
 
 // You can get the result if the given numbers are coprime.
-changeMaxInt(1000); // Set the maximum value to 1000
 isAreCoprime(15, 28); // Output: true
 isAreCoprime(8, 12); // Output: false
 
@@ -99,6 +97,11 @@ getPrimesTwins(); // Range: 1～20, Output: [[3, 5],[5, 7],[11, 13],[17, 19]]
 getPrimesTwins(6); // Range: 6～20, Output: [[11, 13],[17, 19]]
 getPrimesTwins(1, 10); // Range: 1～10, Output: [[3, 5],[5, 7]]
 getPrimesTwins(3, 4); // Range: 3～4, Output: []
+
+// You can get the prime factorization result of the specified number using a formula.
+getFactorsFormula(24); // Output: "2^3*3"
+getFactorsFormula(30); // Output: "2*3*5"
+getFactorsFormula(7); // Output: "7"
 ```
 
 ## License

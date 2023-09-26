@@ -173,7 +173,7 @@ const primes = (function () {
   };
 
   // Get the median of the prime numbers within the specified range.
-  const getPrimesMedian = (start = 1, end = maxInt, places = 2) => {
+  const getPrimesMedian = (start = 1, end = maxInt) => {
     const primesInRange = getPrimes(start, end);
     const length = primesInRange.length;
     if (!length) return 0;
@@ -203,6 +203,21 @@ const primes = (function () {
     }, []);
   };
 
+  // Get the prime factorization result of the specified number using a formula.
+  const getFactorsFormula = (num) => {
+    const factors = getFactors(num);
+    const exponents = {};
+    factors.forEach((factor) => {
+      exponents[factor] = (exponents[factor] || 0) + 1;
+    });
+
+    return Object.entries(exponents)
+      .map(([factor, exponent]) =>
+        exponent === 1 ? factor : `${factor}^${exponent}`
+      )
+      .join("*");
+  };
+
   return {
     getMsg,
     changeMaxInt,
@@ -217,6 +232,7 @@ const primes = (function () {
     getPrimesAverage,
     getPrimesMedian,
     getPrimesTwins,
+    getFactorsFormula,
   };
 })();
 

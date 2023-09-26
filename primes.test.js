@@ -12,6 +12,7 @@ const {
   getPrimesAverage,
   getPrimesMedian,
   getPrimesTwins,
+  getFactorsFormula,
 } = require("./primes.js");
 
 describe("Primes Functions", () => {
@@ -380,6 +381,29 @@ describe("Primes Functions", () => {
       // msg: There are no prime numbers in the specified range.
       expect(() => getPrimesTwins(14, 15)).toThrowError(
         getMsg("errNoTarget", ["prime numbers", "specified range"])
+      );
+    });
+  });
+  describe("getFactorsFormula", () => {
+    beforeEach(() => {
+      changeMaxInt(100);
+    });
+    it("should get the formula of the prime factorization result", () => {
+      expect(getFactorsFormula(24)).toBe("2^3*3");
+      expect(getFactorsFormula(30)).toBe("2*3*5");
+      expect(getFactorsFormula(100)).toBe("2^2*5^2");
+      expect(getFactorsFormula(7)).toBe("7");
+    });
+    it("should throw an error if the specified number is less than 1", () => {
+      // msg: Specified number must be greater than or equal to 1.
+      expect(() => getFactorsFormula(0)).toThrowError(
+        getMsg("errNumericRange", ["Specified", "greater", 1])
+      );
+    });
+    it("should throw an error for values greater than maxInt", () => {
+      // msg: Specified number must be less than or equal to 100.
+      expect(() => getFactorsFormula(101)).toThrowError(
+        getMsg("errNumericRange", ["Specified", "less", 100])
       );
     });
   });
