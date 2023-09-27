@@ -105,7 +105,7 @@ const primes = (function () {
   };
 
   // Get whether two integers are prime to each other.
-  const isAreCoprime = (a, b) => {
+  const isCoprime = (a, b) => {
     if (a < 1 || b < 1)
       throw new Error(getMsg("errNumericRange", ["Specified", "greater", 1]));
     if (a > maxInt || b > maxInt)
@@ -228,7 +228,7 @@ const primes = (function () {
       throw new Error(getMsg("errNumericRange", ["Specified", "greater", 1]));
     if (a > maxInt || m > maxInt)
       throw new Error(getMsg("errNumericRange", ["Specified", "less", maxInt]));
-    if (!primes.isAreCoprime(a, m))
+    if (!primes.isCoprime(a, m))
       // For relatively prime integers a and m, there always exists a multiplicative inverse.
       throw new Error(getMsg("errNotExist", ["Multiplicative inverse"]));
 
@@ -244,7 +244,7 @@ const primes = (function () {
     getPrimes,
     getFactors,
     getRandomPrime,
-    isAreCoprime,
+    isCoprime,
     getPrimesCount,
     getPrimesIndex,
     getPrimesSum,

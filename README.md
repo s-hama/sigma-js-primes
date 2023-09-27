@@ -54,8 +54,8 @@ getRandomPrime(10); // Range: 1～10, Output: 7
 getRandomPrime(4, 12); // Range: 4～12, Output: 5
 
 // You can get the result if the given numbers are coprime.
-isAreCoprime(15, 28); // Output: true
-isAreCoprime(8, 12); // Output: false
+isCoprime(15, 28); // Output: true
+isCoprime(8, 12); // Output: false
 
 // You can get the number of prime numbers in a specified range.
 changeMaxInt(20); // Set the maximum value to 20

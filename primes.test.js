@@ -5,7 +5,7 @@ const {
   getPrimes,
   getFactors,
   getRandomPrime,
-  isAreCoprime,
+  isCoprime,
   getPrimesCount,
   getPrimesIndex,
   getPrimesSum,
@@ -146,39 +146,39 @@ describe("Primes Functions", () => {
       );
     });
   });
-  describe("isAreCoprime", () => {
+  describe("isCoprime", () => {
     beforeEach(() => {
       changeMaxInt(8388607);
     });
     it("should get true if the numbers are mutually prime", () => {
-      expect(isAreCoprime(7, 10)).toBe(true);
-      expect(isAreCoprime(15, 28)).toBe(true);
-      expect(isAreCoprime(28, 15)).toBe(true);
+      expect(isCoprime(7, 10)).toBe(true);
+      expect(isCoprime(15, 28)).toBe(true);
+      expect(isCoprime(28, 15)).toBe(true);
     });
     it("should get false if the numbers are not relatively prime", () => {
-      expect(isAreCoprime(8, 12)).toBe(false);
-      expect(isAreCoprime(21, 35)).toBe(false);
+      expect(isCoprime(8, 12)).toBe(false);
+      expect(isCoprime(21, 35)).toBe(false);
     });
     it("should throw an error for invalid input", () => {
-      expect(() => isAreCoprime(0, 5)).toThrowError();
-      expect(() => isAreCoprime(5, -1)).toThrowError();
-      expect(() => isAreCoprime(8388608, 10)).toThrowError();
+      expect(() => isCoprime(0, 5)).toThrowError();
+      expect(() => isCoprime(5, -1)).toThrowError();
+      expect(() => isCoprime(8388608, 10)).toThrowError();
     });
     it("should throw an error if the specified number is less than 1", () => {
       // msg: Specified number must be greater than or equal to 1.
-      expect(() => isAreCoprime(0, 5)).toThrowError(
+      expect(() => isCoprime(0, 5)).toThrowError(
         getMsg("errNumericRange", ["Specified", "greater", 1])
       );
-      expect(() => isAreCoprime(5, 0)).toThrowError(
+      expect(() => isCoprime(5, 0)).toThrowError(
         getMsg("errNumericRange", ["Specified", "greater", 1])
       );
     });
     it("should throw an error for values greater than maxInt", () => {
       // msg: Specified number must be less than or equal to 8388607.
-      expect(() => isAreCoprime(8388608, 1)).toThrowError(
+      expect(() => isCoprime(8388608, 1)).toThrowError(
         getMsg("errNumericRange", ["Specified", "less", 8388607])
       );
-      expect(() => isAreCoprime(1, 8388608)).toThrowError(
+      expect(() => isCoprime(1, 8388608)).toThrowError(
         getMsg("errNumericRange", ["Specified", "less", 8388607])
       );
     });
