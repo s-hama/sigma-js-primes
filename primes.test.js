@@ -13,6 +13,7 @@ const {
   getPrimesMedian,
   getPrimesTwins,
   getFactorsFormula,
+  getMultInverse,
 } = require("./primes.js");
 
 describe("Primes Functions", () => {
@@ -404,6 +405,39 @@ describe("Primes Functions", () => {
       // msg: Specified number must be less than or equal to 100.
       expect(() => getFactorsFormula(101)).toThrowError(
         getMsg("errNumericRange", ["Specified", "less", 100])
+      );
+    });
+  });
+  describe("getMultInverse", () => {
+    beforeEach(() => {
+      changeMaxInt(8388607);
+    });
+    it("should get the multiplicative inverse of the specified number", () => {
+      expect(getMultInverse(3, 11)).toBe(4);
+      expect(getMultInverse(7, 13)).toBe(2);
+    });
+    it("should throw an error if the specified number is less than 1", () => {
+      // msg: Specified number must be greater than or equal to 1.
+      expect(() => getMultInverse(0, 5)).toThrowError(
+        getMsg("errNumericRange", ["Specified", "greater", 1])
+      );
+      expect(() => getMultInverse(5, 0)).toThrowError(
+        getMsg("errNumericRange", ["Specified", "greater", 1])
+      );
+    });
+    it("should throw an error for values greater than maxInt", () => {
+      // msg: Specified number must be less than or equal to 8388607.
+      expect(() => getMultInverse(8388608, 1)).toThrowError(
+        getMsg("errNumericRange", ["Specified", "less", 8388607])
+      );
+      expect(() => getMultInverse(1, 8388608)).toThrowError(
+        getMsg("errNumericRange", ["Specified", "less", 8388607])
+      );
+    });
+    it("should throw an error when the multiplicative inverse does not exist", () => {
+      // msg: Multiplicative inverse does not exist.
+      expect(() => getMultInverse(6, 9)).toThrowError(
+        getMsg("errNotExist", ["Multiplicative inverse"])
       );
     });
   });
