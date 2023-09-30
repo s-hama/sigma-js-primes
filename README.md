@@ -102,6 +102,10 @@ getPrimesTwins(3, 4); // Range: 3～4, Output: []
 getFactorsFormula(24); // Output: "2^3*3"
 getFactorsFormula(30); // Output: "2*3*5"
 getFactorsFormula(7); // Output: "7"
+
+// You can get the multiplicative inverse of a given number.
+getMultInverse(3, 11); // Output: 4 (Get x that becomes 3*x≡1(mod 11))
+getMultInverse(7, 13); // Output: 2 (Get x that becomes 7*x≡1(mod 13))
 ```
 
 ## License

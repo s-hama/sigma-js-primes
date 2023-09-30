@@ -13,6 +13,7 @@ declare module "@sigma-js/primes" {
   type GetPrimesMedian = (start?: number, end?: number) => number;
   type GetPrimesTwins = (start?: number, end?: number) => [number, number][];
   type GetFactorsFormula = (num: number) => string;
+  type GetMultInverse = (a: number, m: number) => number;
 
   export const getMsg: GetMsg;
   export const changeMaxInt: ChangeMaxInt;
@@ -28,4 +29,5 @@ declare module "@sigma-js/primes" {
   export const getPrimesMedian: GetPrimesMedian;
   export const getPrimesTwins: GetPrimesTwins;
   export const getFactorsFormula: GetFactorsFormula;
+  export const getMultInverse: GetMultInverse;
 }
