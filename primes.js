@@ -23,8 +23,12 @@ const primes = (function () {
   const msgs = {
     // replace: {0}: Specified/Starting/Ending, {1}: greater/less, {2}: 0/1/maxInt
     errNumericRange: "{0} number must be {1} than or equal to {2}.",
+    // replace: {0}: Specified, {1}: coprime
+    errNumericValue: "{0} number must be {1}.",
     // replace: {0}: prime numbers, {1}: specified range
     errNoTarget: "There are no {0} in the {1}.",
+    // replace: {0}: Multiplicative inverse
+    errNotExist: "{0} does not exist.",
   };
 
   // Get messages.
@@ -101,7 +105,7 @@ const primes = (function () {
   };
 
   // Get whether two integers are prime to each other.
-  const isAreCoprime = (a, b) => {
+  const isCoprime = (a, b) => {
     if (a < 1 || b < 1)
       throw new Error(getMsg("errNumericRange", ["Specified", "greater", 1]));
     if (a > maxInt || b > maxInt)
@@ -218,6 +222,21 @@ const primes = (function () {
       .join("*");
   };
 
+  // Get the multiplicative inverse of the specified number. (Get x that becomes a*x≡1(mod m))
+  const getMultInverse = (a, m) => {
+    if (a < 1 || m < 1)
+      throw new Error(getMsg("errNumericRange", ["Specified", "greater", 1]));
+    if (a > maxInt || m > maxInt)
+      throw new Error(getMsg("errNumericRange", ["Specified", "less", maxInt]));
+    if (!primes.isCoprime(a, m))
+      // For relatively prime integers a and m, there always exists a multiplicative inverse.
+      throw new Error(getMsg("errNotExist", ["Multiplicative inverse"]));
+
+    return Array.from({ length: a * m }, (_, x) => x + 1).find(
+      (x) => (a * x) % m === 1
+    );
+  };
+
   return {
     getMsg,
     changeMaxInt,
@@ -225,7 +244,7 @@ const primes = (function () {
     getPrimes,
     getFactors,
     getRandomPrime,
-    isAreCoprime,
+    isCoprime,
     getPrimesCount,
     getPrimesIndex,
     getPrimesSum,
@@ -233,6 +252,7 @@ const primes = (function () {
     getPrimesMedian,
     getPrimesTwins,
     getFactorsFormula,
+    getMultInverse,
   };
 })();
 

@@ -5,7 +5,7 @@ declare module "@sigma-js/primes" {
   type GetPrimes = (start?: number, end?: number) => number[];
   type GetFactors = (num: number) => number[];
   type GetRandomPrime = (start?: number, end?: number) => number;
-  type IsAreCoprime = (a: number, b: number) => boolean;
+  type IsCoprime = (a: number, b: number) => boolean;
   type GetPrimesCount = (start?: number, end?: number) => number;
   type GetPrimesIndex = (start?: number, end?: number) => number;
   type GetPrimesSum = (start?: number, end?: number) => number;
@@ -13,6 +13,7 @@ declare module "@sigma-js/primes" {
   type GetPrimesMedian = (start?: number, end?: number) => number;
   type GetPrimesTwins = (start?: number, end?: number) => [number, number][];
   type GetFactorsFormula = (num: number) => string;
+  type GetMultInverse = (a: number, m: number) => number;
 
   export const getMsg: GetMsg;
   export const changeMaxInt: ChangeMaxInt;
@@ -20,7 +21,7 @@ declare module "@sigma-js/primes" {
   export const getPrimes: GetPrimes;
   export const getFactors: GetFactors;
   export const getRandomPrime: GetRandomPrime;
-  export const isAreCoprime: IsAreCoprime;
+  export const isCoprime: IsCoprime;
   export const getPrimesCount: GetPrimesCount;
   export const getPrimesIndex: GetPrimesIndex;
   export const getPrimesSum: GetPrimesSum;
@@ -28,4 +29,5 @@ declare module "@sigma-js/primes" {
   export const getPrimesMedian: GetPrimesMedian;
   export const getPrimesTwins: GetPrimesTwins;
   export const getFactorsFormula: GetFactorsFormula;
+  export const getMultInverse: GetMultInverse;
 }
