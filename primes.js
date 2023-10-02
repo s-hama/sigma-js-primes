@@ -1,22 +1,63 @@
 const primes = (function () {
   // Generate a list of prime numbers using an optimized Sieve of Eratosthenes.
   let maxInt = 8388607;
+  let sieveType = "eratosthenes";
   let primeNums = [];
+
   const genPrimeNums = () => {
-    primeNums = new Array(maxInt + 1).fill(true);
-    primeNums[0] = primeNums[1] = false;
-    for (let i = 2; i * i <= maxInt; i++) {
-      if (primeNums[i]) {
-        for (let j = i * i; j <= maxInt; j += i) {
-          primeNums[j] = false;
-        }
-      }
-    }
-    primeNums = primeNums.reduce((result, isPrime, index) => {
+    primeNums = (
+      sieveType === "eratosthenes"
+        ? genEratosthenesSieve()
+        : genAtkinSieve()
+    ).reduce((result, isPrime, index) => {
       if (isPrime) result.push(index);
       return result;
     }, []);
   };
+
+  const genEratosthenesSieve = () => {
+    let boolValues = new Array(maxInt + 1).fill(true);
+    boolValues[0] = boolValues[1] = false;
+    for (let i = 2; i * i <= maxInt; i++) {
+      if (boolValues[i]) {
+        for (let j = i * i; j <= maxInt; j += i) {
+          boolValues[j] = false;
+        }
+      }
+    }
+    return boolValues;
+  };
+
+  const genAtkinSieve = () => {
+    boolValues = new Array(maxInt + 1).fill(false);
+    boolValues[2] = boolValues[3] = true;
+    for (let x = 1; x * x <= maxInt; x++) {
+      for (let y = 1; y * y <= maxInt; y++) {
+        let n = 4 * x * x + y * y;
+        if (n <= maxInt && (n % 12 === 1 || n % 12 === 5)) {
+          boolValues[n] = !boolValues[n];
+        }
+        n = 3 * x * x + y * y;
+        if (n <= maxInt && n % 12 === 7) {
+          boolValues[n] = !boolValues[n];
+        }
+        n = 3 * x * x - y * y;
+        if (x > y && n <= maxInt && n % 12 === 11) {
+          boolValues[n] = !boolValues[n];
+        }
+      }
+    }
+    for (let x = 5; x * x <= maxInt; x++) {
+      if (boolValues[x]) {
+        for (let y = x * x; y <= maxInt; y += x * x) {
+          boolValues[y] = false;
+        }
+      }
+    }
+    return boolValues;
+  };
+
+  // Generate prime number list according to sieve type
   genPrimeNums();
 
   // Define message.
