@@ -4,11 +4,17 @@ const primes = (function () {
   let sieveType = "eratosthenes";
   let primeNums = [];
 
+  const getMaxInt = () => {
+    return maxInt;
+  };
+
+  const getSieveType = () => {
+    return sieveType;
+  };
+
   const genPrimeNums = () => {
     primeNums = (
-      sieveType === "eratosthenes"
-        ? genEratosthenesSieve()
-        : genAtkinSieve()
+      sieveType === "eratosthenes" ? genEratosthenesSieve() : genAtkinSieve()
     ).reduce((result, isPrime, index) => {
       if (isPrime) result.push(index);
       return result;
@@ -57,19 +63,45 @@ const primes = (function () {
     return boolValues;
   };
 
-  // Generate prime number list according to sieve type
-  genPrimeNums();
+  // Initialization process.
+  const init = (config) => {
+    if (config?.maxInt === 0)
+      throw new Error(getMsg("errNumericRange", ["MaxInt", "greater", 1]))
+    if (!config?.maxInt && !config?.sieveType)
+      throw new Error(getMsg("errNotSpecify", ["Setting value"]));
+
+    if (config?.maxInt) {
+      if (config.maxInt < 1)
+        throw new Error(getMsg("errNumericRange", ["MaxInt", "greater", 1]));
+      if (!Number.isSafeInteger(config.maxInt))
+        throw new Error(
+          getMsg("errNumericRange", ["MaxInt", "less", Number.MAX_SAFE_INTEGER])
+        );
+      maxInt = config.maxInt;
+    }
+
+    if (config?.sieveType) {
+      if (config.sieveType !== "eratosthenes" && config.sieveType !== "atkin")
+        throw new Error(
+          getMsg("errInvalidSpecify", ["sieveType", "eratosthenes or atkin"])
+        );
+      sieveType = config.sieveType;
+    }
+    genPrimeNums();
+  };
 
   // Define message.
   const msgs = {
-    // replace: {0}: Specified/Starting/Ending, {1}: greater/less, {2}: 0/1/maxInt
+    // replace: {0}: Specified/Starting/Ending/MaxInt, {1}: greater/less, {2}: 0/1/maxInt
     errNumericRange: "{0} number must be {1} than or equal to {2}.",
-    // replace: {0}: Specified, {1}: coprime
-    errNumericValue: "{0} number must be {1}.",
     // replace: {0}: prime numbers, {1}: specified range
     errNoTarget: "There are no {0} in the {1}.",
     // replace: {0}: Multiplicative inverse
     errNotExist: "{0} does not exist.",
+    // replace: {0}: Setting value
+    errNotSpecify: "{0} is not specified.",
+    // replace: {0}: sieveType, {1}: eratosthenes or atkin
+    errInvalidSpecify: "Please specify {0} for {1}.",
   };
 
   // Get messages.
@@ -278,7 +310,13 @@ const primes = (function () {
     );
   };
 
+  // Generate prime number list according to sieve type
+  genPrimeNums();
+
   return {
+    init,
+    getMaxInt,
+    getSieveType,
     getMsg,
     changeMaxInt,
     isPrime,
