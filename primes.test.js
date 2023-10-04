@@ -79,6 +79,21 @@ describe("Primes Functions", () => {
     });
   });
 
+  describe("genPrimeNums", () => {
+    it("should list of prime numbers is generated with the specified maxInt and sieveType", () => {
+      // if maxInt: 20, sieveType: "atkin", genAtkinSieve is executed
+      init({ maxInt: 20, sieveType: "atkin" });
+      expect(getPrimes()).toEqual([2, 3, 5, 7, 11, 13, 17, 19]);
+      expect(getMaxInt()).toEqual(20);
+      expect(getSieveType()).toEqual("atkin");
+      // if maxInt: 25, sieveType: "eratosthenes", genAtkinSieve is executed
+      init({ maxInt: 25, sieveType: "eratosthenes" });
+      expect(getPrimes()).toEqual([2, 3, 5, 7, 11, 13, 17, 19, 23]);
+      expect(getMaxInt()).toEqual(25);
+      expect(getSieveType()).toEqual("eratosthenes");
+    });
+  });
+
   describe("isPrime", () => {
     beforeEach(() => {
       changeMaxInt(8388607);
@@ -110,17 +125,14 @@ describe("Primes Functions", () => {
   describe("getPrimes", () => {
     it("should get prime numbers in range", () => {
       changeMaxInt(15);
-      const primeRange = getPrimes();
-      expect(primeRange).toEqual([2, 3, 5, 7, 11, 13]);
+      expect(getPrimes()).toEqual([2, 3, 5, 7, 11, 13]);
     });
     it("should get a prime number given only the starting value of a range", () => {
       changeMaxInt(100);
-      const primeRange = getPrimes(80);
-      expect(primeRange).toEqual([83, 89, 97]);
+      expect(getPrimes(80)).toEqual([83, 89, 97]);
     });
     it("should get a prime number given start and end values", () => {
-      const primeRange = getPrimes(10, 30);
-      expect(primeRange).toEqual([11, 13, 17, 19, 23, 29]);
+      expect(getPrimes(10, 30)).toEqual([11, 13, 17, 19, 23, 29]);
     });
     it("should throw an error if a starting value less than 1 is specified", () => {
       // msg: Starting number must be greater than or equal to 1.
