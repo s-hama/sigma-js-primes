@@ -114,14 +114,6 @@ const primes = (function () {
       : msg;
   };
 
-  // Re-generate the list of primes in the target range by re-setting the maximum value.
-  const changeMaxInt = (num) => {
-    if (num < 1)
-      throw new Error(getMsg("errNumericRange", ["Specified", "greater", 1]));
-    maxInt = num;
-    genPrimeNums();
-  };
-
   // Get whether the specified number is prime.
   const isPrime = (num) => {
     if (num < 2) return false;
@@ -318,7 +310,6 @@ const primes = (function () {
     getMaxInt,
     getSieveType,
     getMsg,
-    changeMaxInt,
     isPrime,
     getPrimes,
     getFactors,
