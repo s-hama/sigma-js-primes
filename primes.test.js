@@ -1,6 +1,8 @@
 const {
+  init,
+  getMaxInt,
+  getSieveType,
   getMsg,
-  changeMaxInt,
   isPrime,
   getPrimes,
   getFactors,
@@ -17,25 +19,66 @@ const {
 } = require("./primes.js");
 
 describe("Primes Functions", () => {
-  describe("changeMaxInt", () => {
-    it("should update maxInt and regenerate primes", () => {
-      changeMaxInt(9999999);
-      expect(isPrime(2)).toBe(true);
-      expect(isPrime(3)).toBe(true);
-      expect(isPrime(5)).toBe(true);
-      expect(isPrime(7)).toBe(true);
-      expect(isPrime(9999999)).toBe(false);
-    });
-    it("should throw an error for invalid newMaxInt", () => {
-      // msg: Specified number must be greater than or equal to 1.
-      expect(() => changeMaxInt(0)).toThrowError(
-        getMsg("errNumericRange", ["Specified", "greater", 1])
+  describe("init", () => {
+    it("should throw an error for invalid maxInt", () => {
+      // msg: MaxInt number must be greater than or equal to 1.
+      expect(() => init({ maxInt: 0 })).toThrowError(
+        getMsg("errNumericRange", ["MaxInt", "greater", 1])
+      );
+      expect(() => init({ maxInt: -1 })).toThrowError(
+        getMsg("errNumericRange", ["MaxInt", "greater", 1])
+      );
+      // msg: MaxInt number must be less than or equal to 9007199254740991.
+      expect(() => init({ maxInt: 9999999999999999 })).toThrowError(
+        getMsg("errNumericRange", ["MaxInt", "less", Number.MAX_SAFE_INTEGER])
       );
     });
+    it("should throw an error when the setting value is not specified", () => {
+      // msg: Setting value is not specified.
+      expect(() => init()).toThrowError(
+        getMsg("errNotSpecify", ["Setting value"])
+      );
+      expect(() => init({})).toThrowError(
+        getMsg("errNotSpecify", ["Setting value"])
+      );
+      expect(() => init(null)).toThrowError(
+        getMsg("errNotSpecify", ["Setting value"])
+      );
+      expect(() => init(undefined)).toThrowError(
+        getMsg("errNotSpecify", ["Setting value"])
+      );
+    });
+    it("should throw an error for invalid sieveType", () => {
+      // msg: Please specify sieveType for eratosthenes or atkin.
+      expect(() => init({ sieveType: "other sieve" })).toThrowError(
+        getMsg("errInvalidSpecify", ["sieveType", "eratosthenes or atkin"])
+      );
+    });
+    it("should maxInt and sieveType are updated with the specified settings", () => {
+      init({ maxInt: 100, sieveType: "atkin" });
+      expect(getMaxInt()).toEqual(100);
+      expect(getSieveType()).toEqual("atkin");
+    });
   });
+
+  describe("genPrimeNums", () => {
+    it("should list of prime numbers is generated with the specified maxInt and sieveType", () => {
+      // if maxInt: 20, sieveType: "atkin", genAtkinSieve is executed
+      init({ maxInt: 20, sieveType: "atkin" });
+      expect(getPrimes()).toEqual([2, 3, 5, 7, 11, 13, 17, 19]);
+      expect(getMaxInt()).toEqual(20);
+      expect(getSieveType()).toEqual("atkin");
+      // if maxInt: 25, sieveType: "eratosthenes", genAtkinSieve is executed
+      init({ maxInt: 25, sieveType: "eratosthenes" });
+      expect(getPrimes()).toEqual([2, 3, 5, 7, 11, 13, 17, 19, 23]);
+      expect(getMaxInt()).toEqual(25);
+      expect(getSieveType()).toEqual("eratosthenes");
+    });
+  });
+
   describe("isPrime", () => {
     beforeEach(() => {
-      changeMaxInt(8388607);
+      init({ maxInt: 8388607 });
     });
     it("should get false for values less than 2", () => {
       expect(isPrime(0)).toBe(false);
@@ -63,18 +106,15 @@ describe("Primes Functions", () => {
   });
   describe("getPrimes", () => {
     it("should get prime numbers in range", () => {
-      changeMaxInt(15);
-      const primeRange = getPrimes();
-      expect(primeRange).toEqual([2, 3, 5, 7, 11, 13]);
+      init({ maxInt: 15 });
+      expect(getPrimes()).toEqual([2, 3, 5, 7, 11, 13]);
     });
     it("should get a prime number given only the starting value of a range", () => {
-      changeMaxInt(100);
-      const primeRange = getPrimes(80);
-      expect(primeRange).toEqual([83, 89, 97]);
+      init({ maxInt: 100 });
+      expect(getPrimes(80)).toEqual([83, 89, 97]);
     });
     it("should get a prime number given start and end values", () => {
-      const primeRange = getPrimes(10, 30);
-      expect(primeRange).toEqual([11, 13, 17, 19, 23, 29]);
+      expect(getPrimes(10, 30)).toEqual([11, 13, 17, 19, 23, 29]);
     });
     it("should throw an error if a starting value less than 1 is specified", () => {
       // msg: Starting number must be greater than or equal to 1.
@@ -83,7 +123,7 @@ describe("Primes Functions", () => {
       );
     });
     it("should throw an error if an exit value greater than the maximum is specified", () => {
-      changeMaxInt(8388607);
+      init({ maxInt: 8388607 });
       // msg: Ending number must be less than or equal to 8388607.
       expect(() => getPrimes(2, 8388608)).toThrowError(
         getMsg("errNumericRange", ["Ending", "less", 8388607])
@@ -98,7 +138,7 @@ describe("Primes Functions", () => {
   });
   describe("getFactors", () => {
     beforeEach(() => {
-      changeMaxInt(555);
+      init({ maxInt: 555 });
     });
     it("should get the prime factorization result", () => {
       expect(getFactors(24)).toEqual([2, 2, 2, 3]);
@@ -119,7 +159,7 @@ describe("Primes Functions", () => {
   });
   describe("getRandomPrime", () => {
     beforeEach(() => {
-      changeMaxInt(8388607);
+      init({ maxInt: 8388607 });
     });
     it("should get a random prime number within the specified range", () => {
       const ret = getRandomPrime(1, 100);
@@ -149,7 +189,7 @@ describe("Primes Functions", () => {
   });
   describe("isCoprime", () => {
     beforeEach(() => {
-      changeMaxInt(8388607);
+      init({ maxInt: 8388607 });
     });
     it("should get true if the numbers are mutually prime", () => {
       expect(isCoprime(7, 10)).toBe(true);
@@ -186,7 +226,7 @@ describe("Primes Functions", () => {
   });
   describe("getPrimesCount", () => {
     beforeEach(() => {
-      changeMaxInt(20);
+      init({ maxInt: 20 });
     });
     it("should get the number of prime numbers within the specified range", () => {
       expect(getPrimesCount()).toBe(8);
@@ -216,7 +256,7 @@ describe("Primes Functions", () => {
   });
   describe("getPrimesIndex", () => {
     beforeEach(() => {
-      changeMaxInt(25);
+      init({ maxInt: 25 });
     });
     it("should get the correct index of a prime number within a specified range", () => {
       expect(getPrimesIndex(3)).toBe(2);
@@ -265,7 +305,7 @@ describe("Primes Functions", () => {
   });
   describe("getPrimesSum", () => {
     beforeEach(() => {
-      changeMaxInt(30);
+      init({ maxInt: 30 });
     });
     it("should get the sum of prime numbers within the specified range", () => {
       expect(getPrimesSum()).toBe(129);
@@ -292,7 +332,7 @@ describe("Primes Functions", () => {
   });
   describe("getPrimesAverage", () => {
     beforeEach(() => {
-      changeMaxInt(30);
+      init({ maxInt: 30 });
     });
     it("should get the sum of prime numbers within the specified range", () => {
       expect(getPrimesAverage()).toBe(12.9);
@@ -328,7 +368,7 @@ describe("Primes Functions", () => {
   });
   describe("getPrimesMedian", () => {
     beforeEach(() => {
-      changeMaxInt(100);
+      init({ maxInt: 100 });
     });
     it("should get 0 if no prime number is found in the range", () => {
       expect(getPrimesMedian(80, 82)).toBe(0);
@@ -356,12 +396,23 @@ describe("Primes Functions", () => {
   });
   describe("getPrimesTwins", () => {
     beforeEach(() => {
-      changeMaxInt(20);
+      init({ maxInt: 20 });
     });
     it("should get the twin prime numbers within the specified range", () => {
-      expect(getPrimesTwins()).toEqual([[3, 5],[5, 7],[11, 13],[17, 19]]);
-      expect(getPrimesTwins(6)).toEqual([[11, 13],[17, 19]]);
-      expect(getPrimesTwins(1, 10)).toEqual([[3, 5],[5, 7]]);
+      expect(getPrimesTwins()).toEqual([
+        [3, 5],
+        [5, 7],
+        [11, 13],
+        [17, 19],
+      ]);
+      expect(getPrimesTwins(6)).toEqual([
+        [11, 13],
+        [17, 19],
+      ]);
+      expect(getPrimesTwins(1, 10)).toEqual([
+        [3, 5],
+        [5, 7],
+      ]);
       expect(getPrimesTwins(3, 4)).toEqual([]);
     });
     it("should throw an error if getPrimesTwins raises an exception", () => {
@@ -387,7 +438,7 @@ describe("Primes Functions", () => {
   });
   describe("getFactorsFormula", () => {
     beforeEach(() => {
-      changeMaxInt(100);
+      init({ maxInt: 100 });
     });
     it("should get the formula of the prime factorization result", () => {
       expect(getFactorsFormula(24)).toBe("2^3*3");
@@ -410,7 +461,7 @@ describe("Primes Functions", () => {
   });
   describe("getMultInverse", () => {
     beforeEach(() => {
-      changeMaxInt(8388607);
+      init({ maxInt: 8388607 });
     });
     it("should get the multiplicative inverse of the specified number", () => {
       expect(getMultInverse(3, 11)).toBe(4);

@@ -1,34 +1,107 @@
 const primes = (function () {
   // Generate a list of prime numbers using an optimized Sieve of Eratosthenes.
   let maxInt = 8388607;
+  let sieveType = "eratosthenes";
   let primeNums = [];
+
+  const getMaxInt = () => {
+    return maxInt;
+  };
+
+  const getSieveType = () => {
+    return sieveType;
+  };
+
   const genPrimeNums = () => {
-    primeNums = new Array(maxInt + 1).fill(true);
-    primeNums[0] = primeNums[1] = false;
-    for (let i = 2; i * i <= maxInt; i++) {
-      if (primeNums[i]) {
-        for (let j = i * i; j <= maxInt; j += i) {
-          primeNums[j] = false;
-        }
-      }
-    }
-    primeNums = primeNums.reduce((result, isPrime, index) => {
+    primeNums = (
+      sieveType === "eratosthenes" ? genEratosthenesSieve() : genAtkinSieve()
+    ).reduce((result, isPrime, index) => {
       if (isPrime) result.push(index);
       return result;
     }, []);
   };
-  genPrimeNums();
+
+  const genEratosthenesSieve = () => {
+    let boolValues = new Array(maxInt + 1).fill(true);
+    boolValues[0] = boolValues[1] = false;
+    for (let i = 2; i * i <= maxInt; i++) {
+      if (boolValues[i]) {
+        for (let j = i * i; j <= maxInt; j += i) {
+          boolValues[j] = false;
+        }
+      }
+    }
+    return boolValues;
+  };
+
+  const genAtkinSieve = () => {
+    boolValues = new Array(maxInt + 1).fill(false);
+    boolValues[2] = boolValues[3] = true;
+    for (let x = 1; x * x <= maxInt; x++) {
+      for (let y = 1; y * y <= maxInt; y++) {
+        let n = 4 * x * x + y * y;
+        if (n <= maxInt && (n % 12 === 1 || n % 12 === 5)) {
+          boolValues[n] = !boolValues[n];
+        }
+        n = 3 * x * x + y * y;
+        if (n <= maxInt && n % 12 === 7) {
+          boolValues[n] = !boolValues[n];
+        }
+        n = 3 * x * x - y * y;
+        if (x > y && n <= maxInt && n % 12 === 11) {
+          boolValues[n] = !boolValues[n];
+        }
+      }
+    }
+    for (let x = 5; x * x <= maxInt; x++) {
+      if (boolValues[x]) {
+        for (let y = x * x; y <= maxInt; y += x * x) {
+          boolValues[y] = false;
+        }
+      }
+    }
+    return boolValues;
+  };
+
+  // Initialization process.
+  const init = (config) => {
+    if (config?.maxInt === 0)
+      throw new Error(getMsg("errNumericRange", ["MaxInt", "greater", 1]))
+    if (!config?.maxInt && !config?.sieveType)
+      throw new Error(getMsg("errNotSpecify", ["Setting value"]));
+
+    if (config?.maxInt) {
+      if (config.maxInt < 1)
+        throw new Error(getMsg("errNumericRange", ["MaxInt", "greater", 1]));
+      if (!Number.isSafeInteger(config.maxInt))
+        throw new Error(
+          getMsg("errNumericRange", ["MaxInt", "less", Number.MAX_SAFE_INTEGER])
+        );
+      maxInt = config.maxInt;
+    }
+
+    if (config?.sieveType) {
+      if (config.sieveType !== "eratosthenes" && config.sieveType !== "atkin")
+        throw new Error(
+          getMsg("errInvalidSpecify", ["sieveType", "eratosthenes or atkin"])
+        );
+      sieveType = config.sieveType;
+    }
+    genPrimeNums();
+  };
 
   // Define message.
   const msgs = {
-    // replace: {0}: Specified/Starting/Ending, {1}: greater/less, {2}: 0/1/maxInt
+    // replace: {0}: Specified/Starting/Ending/MaxInt, {1}: greater/less, {2}: 0/1/maxInt
     errNumericRange: "{0} number must be {1} than or equal to {2}.",
-    // replace: {0}: Specified, {1}: coprime
-    errNumericValue: "{0} number must be {1}.",
     // replace: {0}: prime numbers, {1}: specified range
     errNoTarget: "There are no {0} in the {1}.",
     // replace: {0}: Multiplicative inverse
     errNotExist: "{0} does not exist.",
+    // replace: {0}: Setting value
+    errNotSpecify: "{0} is not specified.",
+    // replace: {0}: sieveType, {1}: eratosthenes or atkin
+    errInvalidSpecify: "Please specify {0} for {1}.",
   };
 
   // Get messages.
@@ -39,14 +112,6 @@ const primes = (function () {
           return repArr[i] !== undefined ? repArr[i] : match;
         })
       : msg;
-  };
-
-  // Re-generate the list of primes in the target range by re-setting the maximum value.
-  const changeMaxInt = (num) => {
-    if (num < 1)
-      throw new Error(getMsg("errNumericRange", ["Specified", "greater", 1]));
-    maxInt = num;
-    genPrimeNums();
   };
 
   // Get whether the specified number is prime.
@@ -237,9 +302,14 @@ const primes = (function () {
     );
   };
 
+  // Generate prime number list according to sieve type
+  genPrimeNums();
+
   return {
+    init,
+    getMaxInt,
+    getSieveType,
     getMsg,
-    changeMaxInt,
     isPrime,
     getPrimes,
     getFactors,
