@@ -20,13 +20,13 @@ $ npm i @sigma-js/primes
 ### JavaScript require
 
 ```js
-const { isPrime, getPrimes … } = require("@sigma-js/primes");
+const { isPrime, isCoprime, getPrimes … } = require("@sigma-js/primes");
 ```
 
 ### TypeScript import
 
 ```js
-import { isPrime, getPrimes … } from "@sigma-js/primes";
+import { isPrime, isCoprime, getPrimes … } from "@sigma-js/primes";
 ```
 
 ### Call example: init
@@ -48,6 +48,14 @@ isPrime(8); // Output: false
 isPrime(8388607); // Output: false
 ```
 
+### Call example: isCoprime
+
+```js
+// You can get the result if the given numbers are coprime.
+isCoprime(15, 28); // Output: true
+isCoprime(8, 12); // Output: false
+```
+
 ### Call example: getPrimes
 
 ```js
@@ -58,30 +66,17 @@ getPrimes(125); // Range: 125～150, Output: [127, 131, 137, 139, 149]
 getPrimes(110, 140); // Range: 110～140, Output: [113, 127, 131, 137, 139]
 ```
 
-### Call example: getFactors
+### Call example: getPrimesAverage
 
 ```js
-// You can obtain the prime factorization result of the specified number.
-getFactors(24); // Output: [2, 2, 2, 3]
-getFactors(555); // Output: [3, 5, 37]
-```
-
-### Call example: getRandomPrime
-
-```js
-// You can get prime numbers randomly within a specified range.
-init({ maxNum: 100 }); // Set the maximum value to 100
-getRandomPrime(); // Range: 1～100, Output: 7
-getRandomPrime(10); // Range: 10～100, Output: 11
-getRandomPrime(4, 12); // Range: 4～12, Output: 5
-```
-
-### Call example: isCoprime
-
-```js
-// You can get the result if the given numbers are coprime.
-isCoprime(15, 28); // Output: true
-isCoprime(8, 12); // Output: false
+// You can get the average of prime numbers within a specified range.
+init({ maxNum: 30 }); // Set the maximum value to 30
+getPrimesAverage(); // Range: 1～30, Rounded to third decimal places, Output: 12.9
+getPrimesAverage(25); // Range: 25～30, Rounded to third decimal places, Output: 29
+getPrimesAverage(5, 30); // Range: 5～30, Rounded to third decimal places, Output: 15.5
+getPrimesAverage(1, 5, 9); // Range: 1～5, Rounded to the ninth decimal place, Output: 3.333333333
+getPrimesAverage(5, 12, 9); // Range: 5～12, Rounded to the ninth decimal place, Output: 7.666666667
+getPrimesAverage(5, 12, 0); // Range: 5～12, Rounded to the first decimal place, Output: 8
 ```
 
 ### Call example: getPrimesCount
@@ -104,29 +99,6 @@ getPrimesIndex(17, 10); // Range: 10～25, Output: 3
 getPrimesIndex(2, 1, 10); // Range: 1～10, Output: 1
 ```
 
-### Call example: getPrimesSum
-
-```js
-// You can get the sum of prime numbers within a specified range.
-init({ maxNum: 30 }); // Set the maximum value to 30
-getPrimesSum(); // Range: 1～30, Output: 129
-getPrimesSum(25); // Range: 25～30, Output: 29
-getPrimesSum(5, 30); // Range: 5～30, Output: 124
-```
-
-### Call example: getPrimesAverage
-
-```js
-// You can get the average of prime numbers within a specified range.
-init({ maxNum: 30 }); // Set the maximum value to 30
-getPrimesAverage(); // Range: 1～30, Rounded to third decimal places, Output: 12.9
-getPrimesAverage(25); // Range: 25～30, Rounded to third decimal places, Output: 29
-getPrimesAverage(5, 30); // Range: 5～30, Rounded to third decimal places, Output: 15.5
-getPrimesAverage(1, 5, 9); // Range: 1～5, Rounded to the ninth decimal place, Output: 3.333333333
-getPrimesAverage(5, 12, 9); // Range: 5～12, Rounded to the ninth decimal place, Output: 7.666666667
-getPrimesAverage(5, 12, 0); // Range: 5～12, Rounded to the first decimal place, Output: 8
-```
-
 ### Call example: getPrimesMedian
 
 ```js
@@ -138,6 +110,16 @@ getPrimesMedian(5, 34); // Range: 5～34, Output: 17
 getPrimesMedian(5, 50); // Range: 5～50, Output: 23
 ```
 
+### Call example: getPrimesSum
+
+```js
+// You can get the sum of prime numbers within a specified range.
+init({ maxNum: 30 }); // Set the maximum value to 30
+getPrimesSum(); // Range: 1～30, Output: 129
+getPrimesSum(25); // Range: 25～30, Output: 29
+getPrimesSum(5, 30); // Range: 5～30, Output: 124
+```
+
 ### Call example: getPrimesTwins
 
 ```js
@@ -147,6 +129,14 @@ getPrimesTwins(); // Range: 1～20, Output: [[3, 5],[5, 7],[11, 13],[17, 19]]
 getPrimesTwins(6); // Range: 6～20, Output: [[11, 13],[17, 19]]
 getPrimesTwins(1, 10); // Range: 1～10, Output: [[3, 5],[5, 7]]
 getPrimesTwins(3, 4); // Range: 3～4, Output: []
+```
+
+### Call example: getFactors
+
+```js
+// You can obtain the prime factorization result of the specified number.
+getFactors(24); // Output: [2, 2, 2, 3]
+getFactors(555); // Output: [3, 5, 37]
 ```
 
 ### Call example: getFactorsFormula
@@ -164,6 +154,16 @@ getFactorsFormula(7); // Output: "7"
 // You can get the multiplicative inverse of a given number.
 getMultInverse(3, 11); // Output: 4 (Get x that becomes 3*x≡1(mod 11))
 getMultInverse(7, 13); // Output: 2 (Get x that becomes 7*x≡1(mod 13))
+```
+
+### Call example: getRandomPrime
+
+```js
+// You can get prime numbers randomly within a specified range.
+init({ maxNum: 100 }); // Set the maximum value to 100
+getRandomPrime(); // Range: 1～100, Output: 7
+getRandomPrime(10); // Range: 10～100, Output: 11
+getRandomPrime(4, 12); // Range: 4～12, Output: 5
 ```
 
 ## License
