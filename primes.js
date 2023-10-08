@@ -1,16 +1,16 @@
 const primes = (function () {
   // Generate a list of prime numbers using an optimized Sieve of Eratosthenes.
-  let maxNum = 8388607;
   let minNum = 1;
+  let maxNum = 8388607;
   let sieveType = "eratosthenes";
   let primeNums = [];
 
-  const getMaxNum = () => {
-    return maxNum;
-  };
-
   const getMinNum = () => {
     return minNum;
+  };
+
+  const getMaxNum = () => {
+    return maxNum;
   };
 
   const getSieveType = () => {
@@ -69,12 +69,20 @@ const primes = (function () {
 
   // Initialization process.
   const init = (config) => {
-    if (config?.maxNum === 0)
-      throw new Error(getMsg("errNumericRange", ["MaxNum", "greater", 1]));
     if (config?.minNum === 0)
       throw new Error(getMsg("errNumericRange", ["MinNum", "greater", 1]));
+    if (config?.maxNum === 0)
+      throw new Error(getMsg("errNumericRange", ["MaxNum", "greater", 1]));
     if (!config?.maxNum && !config?.minNum && !config?.sieveType)
       throw new Error(getMsg("errNotSpecify", ["Setting value"]));
+
+    if (config?.minNum) {
+      if (config.minNum < 1)
+        throw new Error(getMsg("errNumericRange", ["MinNum", "greater", 1]));
+      if (config.minNum > maxNum)
+        throw new Error(getMsg("errNumericRange", ["MinNum", "less", maxNum]));
+      minNum = config.minNum;
+    }
 
     if (config?.maxNum) {
       if (config.maxNum < 1)
@@ -84,14 +92,6 @@ const primes = (function () {
           getMsg("errNumericRange", ["MaxNum", "less", Number.MAX_SAFE_INTEGER])
         );
       maxNum = config.maxNum;
-    }
-
-    if (config?.minNum) {
-      if (config.minNum < 1)
-        throw new Error(getMsg("errNumericRange", ["MinNum", "greater", 1]));
-      if (config.minNum > maxNum)
-        throw new Error(getMsg("errNumericRange", ["MinNum", "less", maxNum]));
-      minNum = config.minNum;
     }
 
     if (config?.sieveType) {
@@ -106,7 +106,7 @@ const primes = (function () {
 
   // Define message.
   const msgs = {
-    // replace: {0}: Specified number/Starting number/Ending number/Decimal point position/MaxNum/MinNum, {1}: greater/less, {2}: 0/1/maxNum/minNum
+    // replace: {0}: Specified number/Starting number/Ending number/Decimal point position/MinNum/MaxNum, {1}: greater/less, {2}: 0/1/minNum/maxNum
     errNumericRange: "{0} must be {1} than or equal to {2}.",
     // replace: {0}: prime numbers, {1}: specified range
     errNoTarget: "There are no {0} in the {1}.",
@@ -130,10 +130,10 @@ const primes = (function () {
 
   // Get whether the specified number is prime.
   const isPrime = (num) => {
-    if (num > maxNum)
-      throw new Error(getMsg("errNumericRange", ["Specified number", "less", maxNum]));
     if (num < minNum)
       throw new Error(getMsg("errNumericRange", ["Specified number", "greater", minNum]));
+    if (num > maxNum)
+      throw new Error(getMsg("errNumericRange", ["Specified number", "less", maxNum]));
     return primeNums.includes(num);
   };
 
@@ -322,8 +322,8 @@ const primes = (function () {
 
   return {
     init,
-    getMaxNum,
     getMinNum,
+    getMaxNum,
     getSieveType,
     getMsg,
     isPrime,

@@ -1,7 +1,7 @@
 const {
   init,
-  getMaxNum,
   getMinNum,
+  getMaxNum,
   getSieveType,
   getMsg,
   isPrime,
@@ -21,19 +21,6 @@ const {
 
 describe("Around pre-processing and prime number generation", () => {
   describe("init", () => {
-    it("should throw an error for invalid maxNum", () => {
-      // msg: MaxNum number must be greater than or equal to 1.
-      expect(() => init({ maxNum: 0 })).toThrowError(
-        getMsg("errNumericRange", ["MaxNum", "greater", 1])
-      );
-      expect(() => init({ maxNum: -1 })).toThrowError(
-        getMsg("errNumericRange", ["MaxNum", "greater", 1])
-      );
-      // msg: MaxNum number must be less than or equal to 9007199254740991.
-      expect(() => init({ maxNum: 9999999999999999 })).toThrowError(
-        getMsg("errNumericRange", ["MaxNum", "less", Number.MAX_SAFE_INTEGER])
-      );
-    });
     it("should throw an error for invalid minNum", () => {
       // msg: MinNum number must be greater than or equal to 1.
       expect(() => init({ minNum: 0 })).toThrowError(
@@ -45,6 +32,19 @@ describe("Around pre-processing and prime number generation", () => {
       // msg: MinNum number must be less than or equal to 8388607.
       expect(() => init({ minNum: 9999999999999999 })).toThrowError(
         getMsg("errNumericRange", ["MinNum", "less", 8388607])
+      );
+    });
+    it("should throw an error for invalid maxNum", () => {
+      // msg: MaxNum number must be greater than or equal to 1.
+      expect(() => init({ maxNum: 0 })).toThrowError(
+        getMsg("errNumericRange", ["MaxNum", "greater", 1])
+      );
+      expect(() => init({ maxNum: -1 })).toThrowError(
+        getMsg("errNumericRange", ["MaxNum", "greater", 1])
+      );
+      // msg: MaxNum number must be less than or equal to 9007199254740991.
+      expect(() => init({ maxNum: 9999999999999999 })).toThrowError(
+        getMsg("errNumericRange", ["MaxNum", "less", Number.MAX_SAFE_INTEGER])
       );
     });
     it("should throw an error when the setting value is not specified", () => {
@@ -76,14 +76,14 @@ describe("Around pre-processing and prime number generation", () => {
   });
   describe("genPrimeNums", () => {
     it("should list of prime numbers is generated with the specified maxNum and sieveType", () => {
-      // if minNum: 5, maxNum: 20, sieveType: "atkin", genAtkinSieve is executed
-      init({ minNum: 5, maxNum: 20, sieveType: "atkin" });
+      // if  sieveType: "atkin", minNum: 5, maxNum: 20, genAtkinSieve is executed
+      init({ sieveType: "atkin", minNum: 5, maxNum: 20 });
       expect(getPrimes()).toEqual([5, 7, 11, 13, 17, 19]);
       expect(getMinNum()).toEqual(5);
       expect(getMaxNum()).toEqual(20);
       expect(getSieveType()).toEqual("atkin");
-      // if minNum: 3, maxNum: 25, sieveType: "eratosthenes", genAtkinSieve is executed
-      init({ minNum: 3, maxNum: 25, sieveType: "eratosthenes" });
+      // if sieveType: "eratosthenes", minNum: 3, maxNum: 25, genAtkinSieve is executed
+      init({ sieveType: "eratosthenes", minNum: 3, maxNum: 25 });
       expect(getPrimes()).toEqual([3, 5, 7, 11, 13, 17, 19, 23]);
       expect(getMinNum()).toEqual(3);
       expect(getMaxNum()).toEqual(25);
@@ -97,12 +97,6 @@ describe("Primes functions", () => {
     init({ minNum: 1, maxNum: 8388607 });
   });
   describe("isPrime", () => {
-    it("should throw an error for values greater than maxNum", () => {
-      // msg: Specified number must be less than or equal to 8388607.
-      expect(() => isPrime(8388608)).toThrowError(
-        getMsg("errNumericRange", ["Specified number", "less", getMaxNum()])
-      );
-    });
     it("should throw an error for values smaller than minNum", () => {
       // msg: Specified number must be greater than or equal to 1.
       expect(() => isPrime(0)).toThrowError(
@@ -110,6 +104,12 @@ describe("Primes functions", () => {
       );
       expect(() => isPrime(-1)).toThrowError(
         getMsg("errNumericRange", ["Specified number", "greater", getMinNum()])
+      );
+    });
+    it("should throw an error for values greater than maxNum", () => {
+      // msg: Specified number must be less than or equal to 8388607.
+      expect(() => isPrime(8388608)).toThrowError(
+        getMsg("errNumericRange", ["Specified number", "less", getMaxNum()])
       );
     });
     it("should get true for prime numbers", () => {

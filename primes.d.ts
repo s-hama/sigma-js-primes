@@ -1,10 +1,12 @@
 declare module "@sigma-js/primes" {
   type Config = {
-    maxNum?: number;
-    minNum?: number;
     sieveType?: "eratosthenes" | "atkin";
+    minNum?: number;
+    maxNum?: number;
   };
   type Init = (config: Config) => void;
+  type GetMinNum = () => number;
+  type GetMaxNum = () => number;
   type GetMsg = (key: string, repArr?: (number | string)[]) => string;
   type IsPrime = (num: number) => boolean;
   type GetPrimes = (start?: number, end?: number) => number[];
@@ -21,6 +23,8 @@ declare module "@sigma-js/primes" {
   type GetMultInverse = (a: number, m: number) => number;
 
   export const init: Init;
+  export const getMinNum: GetMinNum;
+  export const getMaxNum: GetMaxNum;
   export const getMsg: GetMsg;
   export const isPrime: IsPrime;
   export const getPrimes: GetPrimes;
