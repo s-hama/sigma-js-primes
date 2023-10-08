@@ -1,6 +1,7 @@
 declare module "@sigma-js/primes" {
   type Config = {
     maxInt?: number;
+    minInt?: number;
     sieveType?: "eratosthenes" | "atkin";
   };
   type Init = (config: Config) => void;

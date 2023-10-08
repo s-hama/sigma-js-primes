@@ -1,9 +1,10 @@
 # ＠sigma-js/primes [![NPM version](https://img.shields.io/npm/v/@sigma-js/primes.svg?style=flat)](https://www.npmjs.com/package/@sigma-js/primes) [![NPM license](https://img.shields.io/github/license/s-hama/sigma-js-primes.svg)](https://github.com/s-hama/sigma-js-primes/blob/master/LICENSE) [![NPM monthly downloads](https://img.shields.io/npm/dm/@sigma-js/primes.svg?style=flat)](https://npmjs.org/package/@sigma-js/primes) [![NPM total downloads](https://img.shields.io/npm/dt/@sigma-js/primes.svg?style=flat)](https://npmjs.org/package/@sigma-js/primes) 
 
 
-`@sigma-js/primes` is a simple JavaScript module that generates prime numbers using the Sieve of Eratosthenes algorithm, allowing fast prime number detection and prime number arithmetic.
-
-(Currently, functions beyond prime number detection are under development.)
+`@sigma-js/primes` is a javascript library that enables fast detection of prime numbers and prime number arithmetic with the following characteristices.
+- The default prime generation range is 1 to 8388607 and the algorithm generates prime numbers using a sieve of eratosthenes.
+- Even big numbers can be processed at high speed by narrowing the range of prime numbers generated. 
+- Setting up a prime number generation algorithm (eratosthenes sieve or atkin sieve) suitable for the range of prime numbers to be generated will allow for faster processing.
 
 ## Install
 
@@ -30,9 +31,11 @@ import { isPrime, getPrimes … } from "@sigma-js/primes";
 ### Call example: init
 
 ```js
-// The default maximum value is 8388607, but you can adjust the maximum value for primality test if necessary.
-// The default algorithm is Sieve of Eratosthenes, but you can change it to Sieve of Atkin if needed.
-init({ maxInt: 9999999, sieveType: "atkin" });
+// You can default settings can be changed
+init({ maxInt: 9999999 }); // default: { maxInt: 8388607 } -> after setting: { maxInt: 9999999 }
+init({ minInt: 7777777 }); // default: { minInt: 1 } -> after setting: { minInt: 7777777 }
+init({ sieveType: "atkin" }); // default: { sieveType: "eratosthenes" } -> after setting: { sieveType: "atkin" }
+init({ maxInt: 8000000, minInt: 7000000, sieveType: "atkin" }); // set all at once
 ```
 
 ### Call example: isPrime
@@ -48,10 +51,10 @@ isPrime(8388607); // Output: false
 
 ```js
 // You can specify a range and get the prime numbers in that range.
-init({ maxInt: 15 }); // Set the maximum value to 15
-getPrimes(); // Range: 1～15, Output: [2, 3, 5, 7, 11, 13]
-getPrimes(10); // Range: 1～10, Output: [2, 3, 5, 7]
-getPrimes(4, 12); // Range: 4～12, Output: [5, 7, 11]
+init({ minInt: 100, maxInt: 150 }); // Set maximum value to 100 and maximum value to 150
+getPrimes(); // Range: 100～150, Output: [101, 103, 107, 109, 113, 127, 131, 137, 139, 149]
+getPrimes(125); // Range: 125～150, Output: [127, 131, 137, 139, 149]
+getPrimes(110, 140); // Range: 110～140, Output: [113, 127, 131, 137, 139]
 ```
 
 ### Call example: getFactors
@@ -67,8 +70,8 @@ getFactors(555); // Output: [3, 5, 37]
 ```js
 // You can get prime numbers randomly within a specified range.
 init({ maxInt: 100 }); // Set the maximum value to 100
-getRandomPrime(); // Range: 1～1000, Output: 13
-getRandomPrime(10); // Range: 1～10, Output: 7
+getRandomPrime(); // Range: 1～100, Output: 7
+getRandomPrime(10); // Range: 10～100, Output: 11
 getRandomPrime(4, 12); // Range: 4～12, Output: 5
 ```
 
