@@ -1,10 +1,11 @@
 # ＠sigma-js/primes [![NPM version](https://img.shields.io/npm/v/@sigma-js/primes.svg?style=flat)](https://www.npmjs.com/package/@sigma-js/primes) [![NPM license](https://img.shields.io/github/license/s-hama/sigma-js-primes.svg)](https://github.com/s-hama/sigma-js-primes/blob/master/LICENSE) [![NPM monthly downloads](https://img.shields.io/npm/dm/@sigma-js/primes.svg?style=flat)](https://npmjs.org/package/@sigma-js/primes) [![NPM total downloads](https://img.shields.io/npm/dt/@sigma-js/primes.svg?style=flat)](https://npmjs.org/package/@sigma-js/primes) 
 
 
-`@sigma-js/primes` is a javascript library that enables fast detection of prime numbers and prime number arithmetic with the following characteristices.
-- The default prime generation range is 1 to 8388607 and the algorithm generates prime numbers using a sieve of eratosthenes.
-- Even big numbers can be processed at high speed by narrowing the range of prime numbers generated. 
-- Setting up a prime number generation algorithm (eratosthenes sieve or atkin sieve) suitable for the range of prime numbers to be generated will allow for faster processing.
+`@sigma-js/primes` is a javascript library that enables fast detection of prime numbers and prime number arithmetic with the following characteristics.
+- The default setting uses the Sieve of Eratosthenes to generate a list of prime numbers ranging from 1 to 8388607.
+- The generated prime number list is used for prime number detection and prime number arithmetic, allowing for high-speed processing.
+- However, if the target prime number is larger than the default setting, the processing time for generating prime numbers may become longer.
+In this case, the range of prime numbers to be generated can be narrowed down or an appropriate algorithm (Eratosthenes sieve or Atkin sieve) can be set according to the range of prime numbers to speed up the process of prime number generation even for large numbers.
 
 ## Install
 
@@ -32,10 +33,10 @@ import { isPrime, getPrimes … } from "@sigma-js/primes";
 
 ```js
 // You can default settings can be changed
-init({ maxNum: 9999999 }); // default: { maxNum: 8388607 } -> after setting: { maxNum: 9999999 }
-init({ minNum: 7777777 }); // default: { minNum: 1 } -> after setting: { minNum: 7777777 }
 init({ sieveType: "atkin" }); // default: { sieveType: "eratosthenes" } -> after setting: { sieveType: "atkin" }
-init({ maxNum: 8000000, minNum: 7000000, sieveType: "atkin" }); // set all at once
+init({ minNum: 1234567 }); // default: { minNum: 1 } -> after setting: { minNum: 1234567 }
+init({ maxNum: 8901234 }); // default: { maxNum: 8388607 } -> after setting: { maxNum: 8901234 }
+init({ sieveType: "atkin", minNum: 1234567, maxNum: 8901234 }); // set all at once
 ```
 
 ### Call example: isPrime
