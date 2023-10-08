@@ -1,6 +1,6 @@
 {
   "name": "@sigma-js/primes",
-  "version": "0.0.19",
+  "version": "1.0.0",
   "description": "provides prime arithmetic",
   "keywords": ["math", "prime", "factors", "num", "number", "fast", "check", "is"],
   "main": "./primes.js",
