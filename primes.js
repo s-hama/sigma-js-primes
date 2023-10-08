@@ -220,7 +220,7 @@ const primes = (function () {
 
   // Get a function that retrieves the index of a prime number within a specified range.
   const getPrimesIndex = (num, start = minNum, end = maxNum) => {
-    if (num < 1)
+    if (num < minNum)
       throw new Error(
         getMsg("errNumericRange", ["Specified number", "greater", minNum])
       );
