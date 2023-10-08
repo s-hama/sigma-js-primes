@@ -1,7 +1,7 @@
 const {
   init,
-  getMaxInt,
-  getMinInt,
+  getMaxNum,
+  getMinNum,
   getSieveType,
   getMsg,
   isPrime,
@@ -21,30 +21,30 @@ const {
 
 describe("Around pre-processing and prime number generation", () => {
   describe("init", () => {
-    it("should throw an error for invalid maxInt", () => {
-      // msg: MaxInt number must be greater than or equal to 1.
-      expect(() => init({ maxInt: 0 })).toThrowError(
-        getMsg("errNumericRange", ["MaxInt", "greater", 1])
+    it("should throw an error for invalid maxNum", () => {
+      // msg: MaxNum number must be greater than or equal to 1.
+      expect(() => init({ maxNum: 0 })).toThrowError(
+        getMsg("errNumericRange", ["MaxNum", "greater", 1])
       );
-      expect(() => init({ maxInt: -1 })).toThrowError(
-        getMsg("errNumericRange", ["MaxInt", "greater", 1])
+      expect(() => init({ maxNum: -1 })).toThrowError(
+        getMsg("errNumericRange", ["MaxNum", "greater", 1])
       );
-      // msg: MaxInt number must be less than or equal to 9007199254740991.
-      expect(() => init({ maxInt: 9999999999999999 })).toThrowError(
-        getMsg("errNumericRange", ["MaxInt", "less", Number.MAX_SAFE_INTEGER])
+      // msg: MaxNum number must be less than or equal to 9007199254740991.
+      expect(() => init({ maxNum: 9999999999999999 })).toThrowError(
+        getMsg("errNumericRange", ["MaxNum", "less", Number.MAX_SAFE_INTEGER])
       );
     });
-    it("should throw an error for invalid minInt", () => {
-      // msg: MinInt number must be greater than or equal to 1.
-      expect(() => init({ minInt: 0 })).toThrowError(
-        getMsg("errNumericRange", ["MinInt", "greater", 1])
+    it("should throw an error for invalid minNum", () => {
+      // msg: MinNum number must be greater than or equal to 1.
+      expect(() => init({ minNum: 0 })).toThrowError(
+        getMsg("errNumericRange", ["MinNum", "greater", 1])
       );
-      expect(() => init({ minInt: -1 })).toThrowError(
-        getMsg("errNumericRange", ["MinInt", "greater", 1])
+      expect(() => init({ minNum: -1 })).toThrowError(
+        getMsg("errNumericRange", ["MinNum", "greater", 1])
       );
-      // msg: MinInt number must be less than or equal to 8388607.
-      expect(() => init({ minInt: 9999999999999999 })).toThrowError(
-        getMsg("errNumericRange", ["MinInt", "less", 8388607])
+      // msg: MinNum number must be less than or equal to 8388607.
+      expect(() => init({ minNum: 9999999999999999 })).toThrowError(
+        getMsg("errNumericRange", ["MinNum", "less", 8388607])
       );
     });
     it("should throw an error when the setting value is not specified", () => {
@@ -68,25 +68,25 @@ describe("Around pre-processing and prime number generation", () => {
         getMsg("errInvalidSpecify", ["sieveType", "eratosthenes or atkin"])
       );
     });
-    it("should maxInt and sieveType are updated with the specified settings", () => {
-      init({ maxInt: 100, sieveType: "atkin" });
-      expect(getMaxInt()).toEqual(100);
+    it("should maxNum and sieveType are updated with the specified settings", () => {
+      init({ maxNum: 100, sieveType: "atkin" });
+      expect(getMaxNum()).toEqual(100);
       expect(getSieveType()).toEqual("atkin");
     });
   });
   describe("genPrimeNums", () => {
-    it("should list of prime numbers is generated with the specified maxInt and sieveType", () => {
-      // if minInt: 5, maxInt: 20, sieveType: "atkin", genAtkinSieve is executed
-      init({ minInt: 5, maxInt: 20, sieveType: "atkin" });
+    it("should list of prime numbers is generated with the specified maxNum and sieveType", () => {
+      // if minNum: 5, maxNum: 20, sieveType: "atkin", genAtkinSieve is executed
+      init({ minNum: 5, maxNum: 20, sieveType: "atkin" });
       expect(getPrimes()).toEqual([5, 7, 11, 13, 17, 19]);
-      expect(getMinInt()).toEqual(5);
-      expect(getMaxInt()).toEqual(20);
+      expect(getMinNum()).toEqual(5);
+      expect(getMaxNum()).toEqual(20);
       expect(getSieveType()).toEqual("atkin");
-      // if minInt: 3, maxInt: 25, sieveType: "eratosthenes", genAtkinSieve is executed
-      init({ minInt: 3, maxInt: 25, sieveType: "eratosthenes" });
+      // if minNum: 3, maxNum: 25, sieveType: "eratosthenes", genAtkinSieve is executed
+      init({ minNum: 3, maxNum: 25, sieveType: "eratosthenes" });
       expect(getPrimes()).toEqual([3, 5, 7, 11, 13, 17, 19, 23]);
-      expect(getMinInt()).toEqual(3);
-      expect(getMaxInt()).toEqual(25);
+      expect(getMinNum()).toEqual(3);
+      expect(getMaxNum()).toEqual(25);
       expect(getSieveType()).toEqual("eratosthenes");
     });
   });
@@ -94,22 +94,22 @@ describe("Around pre-processing and prime number generation", () => {
 
 describe("Primes functions", () => {
   beforeEach(() => {
-    init({ minInt: 1, maxInt: 8388607 });
+    init({ minNum: 1, maxNum: 8388607 });
   });
   describe("isPrime", () => {
-    it("should throw an error for values greater than maxInt", () => {
+    it("should throw an error for values greater than maxNum", () => {
       // msg: Specified number must be less than or equal to 8388607.
       expect(() => isPrime(8388608)).toThrowError(
-        getMsg("errNumericRange", ["Specified", "less", getMaxInt()])
+        getMsg("errNumericRange", ["Specified number", "less", getMaxNum()])
       );
     });
-    it("should throw an error for values smaller than minInt", () => {
+    it("should throw an error for values smaller than minNum", () => {
       // msg: Specified number must be greater than or equal to 1.
       expect(() => isPrime(0)).toThrowError(
-        getMsg("errNumericRange", ["Specified", "greater", getMinInt()])
+        getMsg("errNumericRange", ["Specified number", "greater", getMinNum()])
       );
       expect(() => isPrime(-1)).toThrowError(
-        getMsg("errNumericRange", ["Specified", "greater", getMinInt()])
+        getMsg("errNumericRange", ["Specified number", "greater", getMinNum()])
       );
     });
     it("should get true for prime numbers", () => {
@@ -127,31 +127,31 @@ describe("Primes functions", () => {
     });
   });
   describe("getPrimes", () => {
-    it("should throw an error if a starting value less than 1 is minInt", () => {
+    it("should throw an error if a starting value less than 1 is minNum", () => {
       // msg: Starting number must be greater than or equal to 1.
       expect(() => getPrimes(-5)).toThrowError(
-        getMsg("errNumericRange", ["Starting", "greater", getMinInt()])
+        getMsg("errNumericRange", ["Starting number", "greater", getMinNum()])
       );
     });
     it("should throw an error if an exit value greater than the maximum is specified", () => {
-      init({ maxInt: 8388607 });
+      init({ maxNum: 8388607 });
       // msg: Ending number must be less than or equal to 8388607.
       expect(() => getPrimes(2, 8388608)).toThrowError(
-        getMsg("errNumericRange", ["Ending", "less", getMaxInt()])
+        getMsg("errNumericRange", ["Ending number", "less", getMaxNum()])
       );
     });
     it("should throw an error if a starting value is specified that is greater than the ending value", () => {
       // msg: Starting number must be less than or equal to ending number.
       expect(() => getPrimes(100, 1)).toThrowError(
-        getMsg("errNumericRange", ["Starting", "less", "ending number"])
+        getMsg("errNumericRange", ["Starting number", "less", "ending number"])
       );
     });
     it("should get prime numbers in range", () => {
-      init({ minInt: 5, maxInt: 15 });
+      init({ minNum: 5, maxNum: 15 });
       expect(getPrimes()).toEqual([5, 7, 11, 13]);
     });
     it("should get a prime number given only the starting value of a range", () => {
-      init({ maxInt: 100 });
+      init({ maxNum: 100 });
       expect(getPrimes(80)).toEqual([83, 89, 97]);
     });
     it("should get a prime number given start and end values", () => {
@@ -160,18 +160,18 @@ describe("Primes functions", () => {
   });
   describe("getFactors", () => {
     beforeEach(() => {
-      init({ minInt: 1, maxInt: 555 });
+      init({ minNum: 1, maxNum: 555 });
     });
-    it("should throw an error if the specified number is less than minInt", () => {
+    it("should throw an error if the specified number is less than minNum", () => {
       // msg: Specified number must be greater than or equal to 1.
       expect(() => getFactors(0)).toThrowError(
-        getMsg("errNumericRange", ["Specified", "greater", getMinInt()])
+        getMsg("errNumericRange", ["Specified number", "greater", getMinNum()])
       );
     });
-    it("should throw an error for values greater than maxInt", () => {
+    it("should throw an error for values greater than maxNum", () => {
       // msg: Specified number must be less than or equal to 555.
       expect(() => getFactors(556)).toThrowError(
-        getMsg("errNumericRange", ["Specified", "less", getMaxInt()])
+        getMsg("errNumericRange", ["Specified number", "less", getMaxNum()])
       );
     });
     it("should get the prime factorization result", () => {
@@ -183,15 +183,15 @@ describe("Primes functions", () => {
     it("should throw an error if getPrimes raises an exception", () => {
       // msg: Starting number must be greater than or equal to 1.
       expect(() => getRandomPrime(-10, 1)).toThrowError(
-        getMsg("errNumericRange", ["Starting", "greater", getMinInt()])
+        getMsg("errNumericRange", ["Starting number", "greater", getMinNum()])
       );
       // msg: Ending number must be less than or equal to 8388607.
       expect(() => getRandomPrime(1, 8388608)).toThrowError(
-        getMsg("errNumericRange", ["Ending", "less", getMaxInt()])
+        getMsg("errNumericRange", ["Ending number", "less", getMaxNum()])
       );
       // msg: Starting number must be less than or equal to ending number.
       expect(() => getRandomPrime(100, 1)).toThrowError(
-        getMsg("errNumericRange", ["Starting", "less", "ending number"])
+        getMsg("errNumericRange", ["Starting number", "less", "ending number"])
       );
     });
     it("should throw an error if no prime numbers are found in the range", () => {
@@ -207,22 +207,22 @@ describe("Primes functions", () => {
     });
   });
   describe("isCoprime", () => {
-    it("should throw an error if the specified number is less than minInt", () => {
+    it("should throw an error if the specified number is less than minNum", () => {
       // msg: Specified number must be greater than or equal to 1.
       expect(() => isCoprime(0, 5)).toThrowError(
-        getMsg("errNumericRange", ["Specified", "greater", getMinInt()])
+        getMsg("errNumericRange", ["Specified number", "greater", getMinNum()])
       );
       expect(() => isCoprime(5, 0)).toThrowError(
-        getMsg("errNumericRange", ["Specified", "greater", getMinInt()])
+        getMsg("errNumericRange", ["Specified number", "greater", getMinNum()])
       );
     });
-    it("should throw an error for values greater than maxInt", () => {
+    it("should throw an error for values greater than maxNum", () => {
       // msg: Specified number must be less than or equal to 8388607.
       expect(() => isCoprime(8388608, 1)).toThrowError(
-        getMsg("errNumericRange", ["Specified", "less", getMaxInt()])
+        getMsg("errNumericRange", ["Specified number", "less", getMaxNum()])
       );
       expect(() => isCoprime(1, 8388608)).toThrowError(
-        getMsg("errNumericRange", ["Specified", "less", getMaxInt()])
+        getMsg("errNumericRange", ["Specified number", "less", getMaxNum()])
       );
     });
     it("should get true if the numbers are mutually prime", () => {
@@ -242,7 +242,7 @@ describe("Primes functions", () => {
   });
   describe("getPrimesCount", () => {
     beforeEach(() => {
-      init({ minInt: 1, maxInt: 20 });
+      init({ minNum: 1, maxNum: 20 });
     });
     it("should get the number of prime numbers within the specified range", () => {
       expect(getPrimesCount()).toBe(8);
@@ -252,15 +252,15 @@ describe("Primes functions", () => {
     it("should throw an error if getPrimesCount raises an exception", () => {
       // msg: Starting number must be greater than or equal to 1.
       expect(() => getPrimesCount(0)).toThrowError(
-        getMsg("errNumericRange", ["Starting", "greater", getMinInt()])
+        getMsg("errNumericRange", ["Starting number", "greater", getMinNum()])
       );
       // msg: Ending number must be less than or equal to 20.
       expect(() => getPrimesCount(1, 21)).toThrowError(
-        getMsg("errNumericRange", ["Ending", "less", getMaxInt()])
+        getMsg("errNumericRange", ["Ending number", "less", getMaxNum()])
       );
       // msg: Starting number must be less than or equal to ending number.
       expect(() => getPrimesCount(10, 5)).toThrowError(
-        getMsg("errNumericRange", ["Starting", "less", "ending number"])
+        getMsg("errNumericRange", ["Starting number", "less", "ending number"])
       );
     });
     it("should throw an error if no prime numbers are found in the range", () => {
@@ -272,18 +272,18 @@ describe("Primes functions", () => {
   });
   describe("getPrimesIndex", () => {
     beforeEach(() => {
-      init({ minInt: 1, maxInt: 25 });
+      init({ minNum: 1, maxNum: 25 });
     });
-    it("should throw an error if the specified number is less than minInt", () => {
+    it("should throw an error if the specified number is less than minNum", () => {
       // msg: Specified number must be greater than or equal to 1.
       expect(() => getPrimesIndex(0)).toThrowError(
-        getMsg("errNumericRange", ["Specified", "greater", getMinInt()])
+        getMsg("errNumericRange", ["Specified number", "greater", getMinNum()])
       );
     });
-    it("should throw an error for values greater than maxInt", () => {
+    it("should throw an error for values greater than maxNum", () => {
       // msg: Specified number must be less than or equal to 25.
       expect(() => getPrimesIndex(26)).toThrowError(
-        getMsg("errNumericRange", ["Specified", "less", getMaxInt()])
+        getMsg("errNumericRange", ["Specified number", "less", getMaxNum()])
       );
     });
     it("should get the correct index of a prime number within a specified range", () => {
@@ -294,15 +294,15 @@ describe("Primes functions", () => {
     it("should throw an error if getPrimesCount raises an exception", () => {
       // msg: Starting number must be greater than or equal to 1.
       expect(() => getPrimesIndex(5, -5)).toThrowError(
-        getMsg("errNumericRange", ["Starting", "greater", getMinInt()])
+        getMsg("errNumericRange", ["Starting number", "greater", getMinNum()])
       );
       // msg: Ending number must be less than or equal to 25.
       expect(() => getPrimesIndex(5, 1, 26)).toThrowError(
-        getMsg("errNumericRange", ["Ending", "less", getMaxInt()])
+        getMsg("errNumericRange", ["Ending number", "less", getMaxNum()])
       );
       // msg: Starting number must be less than or equal to ending number.
       expect(() => getPrimesIndex(5, 20, 1)).toThrowError(
-        getMsg("errNumericRange", ["Starting", "less", "ending number"])
+        getMsg("errNumericRange", ["Starting number", "less", "ending number"])
       );
     });
     it("should throw an error if no prime numbers are found in the range", () => {
@@ -321,20 +321,20 @@ describe("Primes functions", () => {
   });
   describe("getPrimesSum", () => {
     beforeEach(() => {
-      init({ minInt: 1, maxInt: 30 });
+      init({ minNum: 1, maxNum: 30 });
     });
     it("should throw an error if getPrimesSum raises an exception", () => {
       // msg: Starting number must be greater than or equal to 1.
       expect(() => getPrimesSum(0)).toThrowError(
-        getMsg("errNumericRange", ["Starting", "greater", getMinInt()])
+        getMsg("errNumericRange", ["Starting number", "greater", getMinNum()])
       );
       // msg: Ending number must be less than or equal to 30.
       expect(() => getPrimesSum(1, 31)).toThrowError(
-        getMsg("errNumericRange", ["Ending", "less", getMaxInt()])
+        getMsg("errNumericRange", ["Ending number", "less", getMaxNum()])
       );
       // msg: Starting number must be less than or equal to ending number.
       expect(() => getPrimesSum(100, 5)).toThrowError(
-        getMsg("errNumericRange", ["Starting", "less", "ending number"])
+        getMsg("errNumericRange", ["Starting number", "less", "ending number"])
       );
     });
     it("should get 0 if no prime number is found in the range", () => {
@@ -348,7 +348,7 @@ describe("Primes functions", () => {
   });
   describe("getPrimesAverage", () => {
     beforeEach(() => {
-      init({ minInt: 1, maxInt: 30 });
+      init({ minNum: 1, maxNum: 30 });
     });
     it("should throw an error if the specified number is less than 0", () => {
       // msg: Specified number must be greater than or equal to 0.
@@ -359,15 +359,15 @@ describe("Primes functions", () => {
     it("should throw an error if getPrimesAverage raises an exception", () => {
       // msg: Starting number must be greater than or equal to 1.
       expect(() => getPrimesAverage(0)).toThrowError(
-        getMsg("errNumericRange", ["Starting", "greater", getMinInt()])
+        getMsg("errNumericRange", ["Starting number", "greater", getMinNum()])
       );
       // msg: Ending number must be less than or equal to 30.
       expect(() => getPrimesAverage(1, 31)).toThrowError(
-        getMsg("errNumericRange", ["Ending", "less", getMaxInt()])
+        getMsg("errNumericRange", ["Ending number", "less", getMaxNum()])
       );
       // msg: Starting number must be less than or equal to ending number.
       expect(() => getPrimesAverage(100, 5)).toThrowError(
-        getMsg("errNumericRange", ["Starting", "less", "ending number"])
+        getMsg("errNumericRange", ["Starting number", "less", "ending number"])
       );
     });
     it("should get 0 if no prime number is found in the range", () => {
@@ -384,20 +384,20 @@ describe("Primes functions", () => {
   });
   describe("getPrimesMedian", () => {
     beforeEach(() => {
-      init({ minInt: 1, maxInt: 100 });
+      init({ minNum: 1, maxNum: 100 });
     });
     it("should throw an error if getPrimesMedian raises an exception", () => {
       // msg: Starting number must be greater than or equal to 1.
       expect(() => getPrimesMedian(0)).toThrowError(
-        getMsg("errNumericRange", ["Starting", "greater", getMinInt()])
+        getMsg("errNumericRange", ["Starting number", "greater", getMinNum()])
       );
       // msg: Ending number must be less than or equal to 100.
       expect(() => getPrimesMedian(1, 101)).toThrowError(
-        getMsg("errNumericRange", ["Ending", "less", getMaxInt()])
+        getMsg("errNumericRange", ["Ending number", "less", getMaxNum()])
       );
       // msg: Starting number must be less than or equal to ending number.
       expect(() => getPrimesMedian(100, 5)).toThrowError(
-        getMsg("errNumericRange", ["Starting", "less", "ending number"])
+        getMsg("errNumericRange", ["Starting number", "less", "ending number"])
       );
     });
     it("should get 0 if no prime number is found in the range", () => {
@@ -412,20 +412,20 @@ describe("Primes functions", () => {
   });
   describe("getPrimesTwins", () => {
     beforeEach(() => {
-      init({ minInt: 1, maxInt: 20 });
+      init({ minNum: 1, maxNum: 20 });
     });
     it("should throw an error if getPrimesTwins raises an exception", () => {
       // msg: Starting number must be greater than or equal to 1.
       expect(() => getPrimesTwins(0)).toThrowError(
-        getMsg("errNumericRange", ["Starting", "greater", getMinInt()])
+        getMsg("errNumericRange", ["Starting number", "greater", getMinNum()])
       );
       // msg: Ending number must be less than or equal to 20.
       expect(() => getPrimesTwins(1, 21)).toThrowError(
-        getMsg("errNumericRange", ["Ending", "less", getMaxInt()])
+        getMsg("errNumericRange", ["Ending number", "less", getMaxNum()])
       );
       // msg: Starting number must be less than or equal to ending number.
       expect(() => getPrimesTwins(10, 5)).toThrowError(
-        getMsg("errNumericRange", ["Starting", "less", "ending number"])
+        getMsg("errNumericRange", ["Starting number", "less", "ending number"])
       );
     });
     it("should throw an error if no prime numbers are found in the range", () => {
@@ -454,18 +454,18 @@ describe("Primes functions", () => {
   });
   describe("getFactorsFormula", () => {
     beforeEach(() => {
-      init({ minInt: 1, maxInt: 100 });
+      init({ minNum: 1, maxNum: 100 });
     });
-    it("should throw an error if the specified number is less than minInt", () => {
+    it("should throw an error if the specified number is less than minNum", () => {
       // msg: Specified number must be greater than or equal to 1.
       expect(() => getFactorsFormula(0)).toThrowError(
-        getMsg("errNumericRange", ["Specified", "greater", getMinInt()])
+        getMsg("errNumericRange", ["Specified number", "greater", getMinNum()])
       );
     });
-    it("should throw an error for values greater than maxInt", () => {
+    it("should throw an error for values greater than maxNum", () => {
       // msg: Specified number must be less than or equal to 100.
       expect(() => getFactorsFormula(101)).toThrowError(
-        getMsg("errNumericRange", ["Specified", "less", getMaxInt()])
+        getMsg("errNumericRange", ["Specified number", "less", getMaxNum()])
       );
     });
     it("should get the formula of the prime factorization result", () => {
@@ -476,22 +476,22 @@ describe("Primes functions", () => {
     });
   });
   describe("getMultInverse", () => {
-    it("should throw an error if the specified number is less than minInt", () => {
+    it("should throw an error if the specified number is less than minNum", () => {
       // msg: Specified number must be greater than or equal to 1.
       expect(() => getMultInverse(0, 5)).toThrowError(
-        getMsg("errNumericRange", ["Specified", "greater", getMinInt()])
+        getMsg("errNumericRange", ["Specified number", "greater", getMinNum()])
       );
       expect(() => getMultInverse(5, 0)).toThrowError(
-        getMsg("errNumericRange", ["Specified", "greater", getMinInt()])
+        getMsg("errNumericRange", ["Specified number", "greater", getMinNum()])
       );
     });
-    it("should throw an error for values greater than maxInt", () => {
+    it("should throw an error for values greater than maxNum", () => {
       // msg: Specified number must be less than or equal to 8388607.
       expect(() => getMultInverse(8388608, 1)).toThrowError(
-        getMsg("errNumericRange", ["Specified", "less", getMaxInt()])
+        getMsg("errNumericRange", ["Specified number", "less", getMaxNum()])
       );
       expect(() => getMultInverse(1, 8388608)).toThrowError(
-        getMsg("errNumericRange", ["Specified", "less", getMaxInt()])
+        getMsg("errNumericRange", ["Specified number", "less", getMaxNum()])
       );
     });
     it("should throw an error when the multiplicative inverse does not exist", () => {

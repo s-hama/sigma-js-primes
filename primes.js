@@ -1,16 +1,16 @@
 const primes = (function () {
   // Generate a list of prime numbers using an optimized Sieve of Eratosthenes.
-  let maxInt = 8388607;
-  let minInt = 1;
+  let maxNum = 8388607;
+  let minNum = 1;
   let sieveType = "eratosthenes";
   let primeNums = [];
 
-  const getMaxInt = () => {
-    return maxInt;
+  const getMaxNum = () => {
+    return maxNum;
   };
 
-  const getMinInt = () => {
-    return minInt;
+  const getMinNum = () => {
+    return minNum;
   };
 
   const getSieveType = () => {
@@ -21,46 +21,46 @@ const primes = (function () {
     primeNums = (
       sieveType === "eratosthenes" ? genEratosthenesSieve() : genAtkinSieve()
     ).reduce((result, isPrime, index) => {
-      if (isPrime) result.push(index + minInt);
+      if (isPrime) result.push(index + minNum);
       return result;
     }, []);
   };
 
   const genEratosthenesSieve = () => {
-    const boolValues = new Array(maxInt - minInt + 1).fill(true)
-    if (minInt === 1)
+    const boolValues = new Array(maxNum - minNum + 1).fill(true)
+    if (minNum === 1)
       boolValues[0] = false;
-    for (let i = 2; i * i <= maxInt; i++) {
-      for (let j = Math.max(i * i, Math.ceil(minInt / i) * i); j <= maxInt; j += i) {
-        boolValues[j - minInt] = false;
+    for (let i = 2; i * i <= maxNum; i++) {
+      for (let j = Math.max(i * i, Math.ceil(minNum / i) * i); j <= maxNum; j += i) {
+        boolValues[j - minNum] = false;
       }
     }
     return boolValues;
   };
 
   const genAtkinSieve = () => {
-    const boolValues = new Array(maxInt - minInt + 1).fill(false);
-    boolValues[2 - minInt] = boolValues[3 - minInt] = true;
-    for (let x = 1; x * x <= maxInt; x++) {
-      for (let y = 1; y * y <= maxInt; y++) {
+    const boolValues = new Array(maxNum - minNum + 1).fill(false);
+    boolValues[2 - minNum] = boolValues[3 - minNum] = true;
+    for (let x = 1; x * x <= maxNum; x++) {
+      for (let y = 1; y * y <= maxNum; y++) {
         let n = 4 * x * x + y * y;
-        if (n >= minInt && n <= maxInt && (n % 12 === 1 || n % 12 === 5)) {
-          boolValues[n - minInt] = !boolValues[n - minInt];
+        if (n >= minNum && n <= maxNum && (n % 12 === 1 || n % 12 === 5)) {
+          boolValues[n - minNum] = !boolValues[n - minNum];
         }
         n = 3 * x * x + y * y;
-        if (n >= minInt && n <= maxInt && n % 12 === 7) {
-          boolValues[n - minInt] = !boolValues[n - minInt];
+        if (n >= minNum && n <= maxNum && n % 12 === 7) {
+          boolValues[n - minNum] = !boolValues[n - minNum];
         }
         n = 3 * x * x - y * y;
-        if (x > y && n >= minInt && n <= maxInt && n % 12 === 11) {
-          boolValues[n - minInt] = !boolValues[n - minInt];
+        if (x > y && n >= minNum && n <= maxNum && n % 12 === 11) {
+          boolValues[n - minNum] = !boolValues[n - minNum];
         }
       }
     }
-    for (let x = 5; x * x <= maxInt; x++) {
-      if (boolValues[x - minInt]) {
-        for (let y = x * x; y <= maxInt; y += x * x) {
-          boolValues[y - minInt] = false;
+    for (let x = 5; x * x <= maxNum; x++) {
+      if (boolValues[x - minNum]) {
+        for (let y = x * x; y <= maxNum; y += x * x) {
+          boolValues[y - minNum] = false;
         }
       }
     }
@@ -69,29 +69,29 @@ const primes = (function () {
 
   // Initialization process.
   const init = (config) => {
-    if (config?.maxInt === 0)
-      throw new Error(getMsg("errNumericRange", ["MaxInt", "greater", 1]));
-    if (config?.minInt === 0)
-      throw new Error(getMsg("errNumericRange", ["MinInt", "greater", 1]));
-    if (!config?.maxInt && !config?.minInt && !config?.sieveType)
+    if (config?.maxNum === 0)
+      throw new Error(getMsg("errNumericRange", ["MaxNum", "greater", 1]));
+    if (config?.minNum === 0)
+      throw new Error(getMsg("errNumericRange", ["MinNum", "greater", 1]));
+    if (!config?.maxNum && !config?.minNum && !config?.sieveType)
       throw new Error(getMsg("errNotSpecify", ["Setting value"]));
 
-    if (config?.maxInt) {
-      if (config.maxInt < 1)
-        throw new Error(getMsg("errNumericRange", ["MaxInt", "greater", 1]));
-      if (!Number.isSafeInteger(config.maxInt))
+    if (config?.maxNum) {
+      if (config.maxNum < 1)
+        throw new Error(getMsg("errNumericRange", ["MaxNum", "greater", 1]));
+      if (!Number.isSafeInteger(config.maxNum))
         throw new Error(
-          getMsg("errNumericRange", ["MaxInt", "less", Number.MAX_SAFE_INTEGER])
+          getMsg("errNumericRange", ["MaxNum", "less", Number.MAX_SAFE_INTEGER])
         );
-      maxInt = config.maxInt;
+      maxNum = config.maxNum;
     }
 
-    if (config?.minInt) {
-      if (config.minInt < 1)
-        throw new Error(getMsg("errNumericRange", ["MinInt", "greater", 1]));
-      if (config.minInt > maxInt)
-        throw new Error(getMsg("errNumericRange", ["MinInt", "less", maxInt]));
-      minInt = config.minInt;
+    if (config?.minNum) {
+      if (config.minNum < 1)
+        throw new Error(getMsg("errNumericRange", ["MinNum", "greater", 1]));
+      if (config.minNum > maxNum)
+        throw new Error(getMsg("errNumericRange", ["MinNum", "less", maxNum]));
+      minNum = config.minNum;
     }
 
     if (config?.sieveType) {
@@ -106,8 +106,8 @@ const primes = (function () {
 
   // Define message.
   const msgs = {
-    // replace: {0}: Specified/Starting/Ending/MaxInt, {1}: greater/less, {2}: 0/1/maxInt
-    errNumericRange: "{0} number must be {1} than or equal to {2}.",
+    // replace: {0}: Specified number/Starting number/Ending number/Decimal point position/MaxNum/MinNum, {1}: greater/less, {2}: 0/1/maxNum/minNum
+    errNumericRange: "{0} must be {1} than or equal to {2}.",
     // replace: {0}: prime numbers, {1}: specified range
     errNoTarget: "There are no {0} in the {1}.",
     // replace: {0}: Multiplicative inverse
@@ -130,22 +130,22 @@ const primes = (function () {
 
   // Get whether the specified number is prime.
   const isPrime = (num) => {
-    if (num > maxInt)
-      throw new Error(getMsg("errNumericRange", ["Specified", "less", maxInt]));
-    if (num < minInt)
-      throw new Error(getMsg("errNumericRange", ["Specified", "greater", minInt]));
+    if (num > maxNum)
+      throw new Error(getMsg("errNumericRange", ["Specified number", "less", maxNum]));
+    if (num < minNum)
+      throw new Error(getMsg("errNumericRange", ["Specified number", "greater", minNum]));
     return primeNums.includes(num);
   };
 
   // Get prime numbers in a specified range.
-  const getPrimes = (start = minInt, end = maxInt) => {
-    if (start < minInt)
-      throw new Error(getMsg("errNumericRange", ["Starting", "greater", minInt]));
-    if (end > maxInt)
-      throw new Error(getMsg("errNumericRange", ["Ending", "less", maxInt]));
+  const getPrimes = (start = minNum, end = maxNum) => {
+    if (start < minNum)
+      throw new Error(getMsg("errNumericRange", ["Starting number", "greater", minNum]));
+    if (end > maxNum)
+      throw new Error(getMsg("errNumericRange", ["Ending number", "less", maxNum]));
     if (start > end)
       throw new Error(
-        getMsg("errNumericRange", ["Starting", "less", "ending number"])
+        getMsg("errNumericRange", ["Starting number", "less", "ending number"])
       );
 
     const primesInRange = primeNums.filter(
@@ -156,10 +156,10 @@ const primes = (function () {
 
   // Get the prime factorization result of the specified number.
   const getFactors = (num) => {
-    if (num < minInt)
-      throw new Error(getMsg("errNumericRange", ["Specified", "greater", minInt]));
-    if (num > maxInt)
-      throw new Error(getMsg("errNumericRange", ["Specified", "less", maxInt]));
+    if (num < minNum)
+      throw new Error(getMsg("errNumericRange", ["Specified number", "greater", minNum]));
+    if (num > maxNum)
+      throw new Error(getMsg("errNumericRange", ["Specified number", "less", maxNum]));
 
     const factors = [];
     let divisor = 2;
@@ -175,7 +175,7 @@ const primes = (function () {
   };
 
   // Get a random prime number within the specified range.
-  const getRandomPrime = (start = minInt, end = maxInt) => {
+  const getRandomPrime = (start = minNum, end = maxNum) => {
     const primesInRange = getPrimes(start, end);
     if (!primesInRange.length)
       throw new Error(
@@ -186,10 +186,10 @@ const primes = (function () {
 
   // Get whether two integers are prime to each other.
   const isCoprime = (a, b) => {
-    if (a < minInt || b < minInt)
-      throw new Error(getMsg("errNumericRange", ["Specified", "greater", minInt]));
-    if (a > maxInt || b > maxInt)
-      throw new Error(getMsg("errNumericRange", ["Specified", "less", maxInt]));
+    if (a < minNum || b < minNum)
+      throw new Error(getMsg("errNumericRange", ["Specified number", "greater", minNum]));
+    if (a > maxNum || b > maxNum)
+      throw new Error(getMsg("errNumericRange", ["Specified number", "less", maxNum]));
 
     const gcd = (x, y) => {
       while (y !== 0) {
@@ -203,7 +203,7 @@ const primes = (function () {
   };
 
   // Get the number of prime numbers in the specified range.
-  const getPrimesCount = (start = minInt, end = maxInt) => {
+  const getPrimesCount = (start = minNum, end = maxNum) => {
     const primesInRange = getPrimes(start, end);
     if (!primesInRange.length)
       throw new Error(
@@ -213,11 +213,11 @@ const primes = (function () {
   };
 
   // Get a function that retrieves the index of a prime number within a specified range.
-  const getPrimesIndex = (num, start = minInt, end = maxInt) => {
+  const getPrimesIndex = (num, start = minNum, end = maxNum) => {
     if (num < 1)
-      throw new Error(getMsg("errNumericRange", ["Specified", "greater", minInt]));
-    if (num > maxInt)
-      throw new Error(getMsg("errNumericRange", ["Specified", "less", maxInt]));
+      throw new Error(getMsg("errNumericRange", ["Specified number", "greater", minNum]));
+    if (num > maxNum)
+      throw new Error(getMsg("errNumericRange", ["Specified number", "less", maxNum]));
 
     const primesInRange = getPrimes(start, end);
     if (!primesInRange.length)
@@ -234,7 +234,7 @@ const primes = (function () {
   };
 
   // Get the sum of prime numbers within the specified range.
-  const getPrimesSum = (start = minInt, end = maxInt) => {
+  const getPrimesSum = (start = minNum, end = maxNum) => {
     const primesInRange = getPrimes(start, end);
     return primesInRange.length
       ? primesInRange.reduce((acc, prime) => acc + prime, 0)
@@ -242,7 +242,7 @@ const primes = (function () {
   };
 
   // Get the average of prime numbers within the specified range.
-  const getPrimesAverage = (start = minInt, end = maxInt, places = 2) => {
+  const getPrimesAverage = (start = minNum, end = maxNum, places = 2) => {
     if (places < 0)
       throw new Error(
         getMsg("errNumericRange", ["Decimal point position", "greater", 0])
@@ -257,7 +257,7 @@ const primes = (function () {
   };
 
   // Get the median of the prime numbers within the specified range.
-  const getPrimesMedian = (start = minInt, end = maxInt) => {
+  const getPrimesMedian = (start = minNum, end = maxNum) => {
     const primesInRange = getPrimes(start, end);
     const length = primesInRange.length;
     if (!length) return 0;
@@ -272,7 +272,7 @@ const primes = (function () {
   };
 
   // Get the twin prime numbers within the specified range
-  const getPrimesTwins = (start = minInt, end = maxInt) => {
+  const getPrimesTwins = (start = minNum, end = maxNum) => {
     const primesInRange = primes.getPrimes(start, end);
     if (!primesInRange.length)
       throw new Error(
@@ -304,10 +304,10 @@ const primes = (function () {
 
   // Get the multiplicative inverse of the specified number. (Get x that becomes a*x≡1(mod m))
   const getMultInverse = (a, m) => {
-    if (a < minInt || m < minInt)
-      throw new Error(getMsg("errNumericRange", ["Specified", "greater", minInt]));
-    if (a > maxInt || m > maxInt)
-      throw new Error(getMsg("errNumericRange", ["Specified", "less", maxInt]));
+    if (a < minNum || m < minNum)
+      throw new Error(getMsg("errNumericRange", ["Specified number", "greater", minNum]));
+    if (a > maxNum || m > maxNum)
+      throw new Error(getMsg("errNumericRange", ["Specified number", "less", maxNum]));
     if (!primes.isCoprime(a, m))
       // For relatively prime integers a and m, there always exists a multiplicative inverse.
       throw new Error(getMsg("errNotExist", ["Multiplicative inverse"]));
@@ -322,8 +322,8 @@ const primes = (function () {
 
   return {
     init,
-    getMaxInt,
-    getMinInt,
+    getMaxNum,
+    getMinNum,
     getSieveType,
     getMsg,
     isPrime,

@@ -32,10 +32,10 @@ import { isPrime, getPrimes … } from "@sigma-js/primes";
 
 ```js
 // You can default settings can be changed
-init({ maxInt: 9999999 }); // default: { maxInt: 8388607 } -> after setting: { maxInt: 9999999 }
-init({ minInt: 7777777 }); // default: { minInt: 1 } -> after setting: { minInt: 7777777 }
+init({ maxNum: 9999999 }); // default: { maxNum: 8388607 } -> after setting: { maxNum: 9999999 }
+init({ minNum: 7777777 }); // default: { minNum: 1 } -> after setting: { minNum: 7777777 }
 init({ sieveType: "atkin" }); // default: { sieveType: "eratosthenes" } -> after setting: { sieveType: "atkin" }
-init({ maxInt: 8000000, minInt: 7000000, sieveType: "atkin" }); // set all at once
+init({ maxNum: 8000000, minNum: 7000000, sieveType: "atkin" }); // set all at once
 ```
 
 ### Call example: isPrime
@@ -51,7 +51,7 @@ isPrime(8388607); // Output: false
 
 ```js
 // You can specify a range and get the prime numbers in that range.
-init({ minInt: 100, maxInt: 150 }); // Set maximum value to 100 and maximum value to 150
+init({ minNum: 100, maxNum: 150 }); // Set maximum value to 100 and maximum value to 150
 getPrimes(); // Range: 100～150, Output: [101, 103, 107, 109, 113, 127, 131, 137, 139, 149]
 getPrimes(125); // Range: 125～150, Output: [127, 131, 137, 139, 149]
 getPrimes(110, 140); // Range: 110～140, Output: [113, 127, 131, 137, 139]
@@ -69,7 +69,7 @@ getFactors(555); // Output: [3, 5, 37]
 
 ```js
 // You can get prime numbers randomly within a specified range.
-init({ maxInt: 100 }); // Set the maximum value to 100
+init({ maxNum: 100 }); // Set the maximum value to 100
 getRandomPrime(); // Range: 1～100, Output: 7
 getRandomPrime(10); // Range: 10～100, Output: 11
 getRandomPrime(4, 12); // Range: 4～12, Output: 5
@@ -87,7 +87,7 @@ isCoprime(8, 12); // Output: false
 
 ```js
 // You can get the number of prime numbers in a specified range.
-init({ maxInt: 20 }); // Set the maximum value to 20
+init({ maxNum: 20 }); // Set the maximum value to 20
 getPrimesCount(); // Range: 1～20, Output: 8
 getPrimesCount(6); // Range: 6～20, Output: 5
 getPrimesCount(1, 10); // Range: 1～10, Output: 4
@@ -97,7 +97,7 @@ getPrimesCount(1, 10); // Range: 1～10, Output: 4
 
 ```js
 // You can get the correct index of prime numbers in a given range.
-init({ maxInt: 25 }); // Set the maximum value to 25
+init({ maxNum: 25 }); // Set the maximum value to 25
 getPrimesIndex(3); // Range: 1～25, Output: 2
 getPrimesIndex(17, 10); // Range: 10～25, Output: 3
 getPrimesIndex(2, 1, 10); // Range: 1～10, Output: 1
@@ -107,7 +107,7 @@ getPrimesIndex(2, 1, 10); // Range: 1～10, Output: 1
 
 ```js
 // You can get the sum of prime numbers within a specified range.
-init({ maxInt: 30 }); // Set the maximum value to 30
+init({ maxNum: 30 }); // Set the maximum value to 30
 getPrimesSum(); // Range: 1～30, Output: 129
 getPrimesSum(25); // Range: 25～30, Output: 29
 getPrimesSum(5, 30); // Range: 5～30, Output: 124
@@ -117,7 +117,7 @@ getPrimesSum(5, 30); // Range: 5～30, Output: 124
 
 ```js
 // You can get the average of prime numbers within a specified range.
-init({ maxInt: 30 }); // Set the maximum value to 30
+init({ maxNum: 30 }); // Set the maximum value to 30
 getPrimesAverage(); // Range: 1～30, Rounded to third decimal places, Output: 12.9
 getPrimesAverage(25); // Range: 25～30, Rounded to third decimal places, Output: 29
 getPrimesAverage(5, 30); // Range: 5～30, Rounded to third decimal places, Output: 15.5
@@ -130,7 +130,7 @@ getPrimesAverage(5, 12, 0); // Range: 5～12, Rounded to the first decimal place
 
 ```js
 // You can get the number of prime numbers in a specified range.
-init({ maxInt: 100 }); // Set the maximum value to 100
+init({ maxNum: 100 }); // Set the maximum value to 100
 getPrimesMedian(); // Range: 1～100, Output: 41
 getPrimesMedian(25); // Range: 25～100, Output: 60
 getPrimesMedian(5, 34); // Range: 5～34, Output: 17
@@ -141,7 +141,7 @@ getPrimesMedian(5, 50); // Range: 5～50, Output: 23
 
 ```js
 // You can get twin prime numbers within a specified range.
-init({ maxInt: 20 }); // Set the maximum value to 20
+init({ maxNum: 20 }); // Set the maximum value to 20
 getPrimesTwins(); // Range: 1～20, Output: [[3, 5],[5, 7],[11, 13],[17, 19]]
 getPrimesTwins(6); // Range: 6～20, Output: [[11, 13],[17, 19]]
 getPrimesTwins(1, 10); // Range: 1～10, Output: [[3, 5],[5, 7]]
