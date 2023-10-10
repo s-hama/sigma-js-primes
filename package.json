@@ -1,7 +1,7 @@
 {
   "name": "@sigma-js/primes",
   "version": "1.0.0",
-  "description": "provides prime arithmetic",
+  "description": "JavaScript library for efficient prime number detection and arithmetic, with customizable algorithms for large numbers.",
   "keywords": ["math", "prime", "factors", "num", "number", "fast", "check", "is"],
   "main": "./primes.js",
   "repository": {
