@@ -1,7 +1,7 @@
 # ＠sigma-js/primes [![NPM version](https://img.shields.io/npm/v/@sigma-js/primes.svg?style=flat)](https://www.npmjs.com/package/@sigma-js/primes) [![NPM license](https://img.shields.io/github/license/s-hama/sigma-js-primes.svg)](https://github.com/s-hama/sigma-js-primes/blob/master/LICENSE) [![NPM monthly downloads](https://img.shields.io/npm/dm/@sigma-js/primes.svg?style=flat)](https://npmjs.org/package/@sigma-js/primes) [![NPM total downloads](https://img.shields.io/npm/dt/@sigma-js/primes.svg?style=flat)](https://npmjs.org/package/@sigma-js/primes) 
 
 
-`@sigma-js/primes` is a javascript library that enables fast detection of prime numbers and prime number arithmetic with the following characteristics.
+**@sigma-js/primes** is a javascript library that enables fast detection of prime numbers and prime number arithmetic with the following characteristics.
 - The default setting uses the Sieve of Eratosthenes to generate a list of prime numbers ranging from 1 to 8388607.
 - The generated prime number list is used for prime number detection and prime number arithmetic, allowing for high-speed processing.
 - However, if the target prime number is larger than the default setting, the processing time for generating prime numbers may become longer.
