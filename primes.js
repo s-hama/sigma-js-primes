@@ -1,4 +1,4 @@
-const primes = (function () {
+module.exports = (function () {
   // Generate a list of prime numbers using an optimized Sieve of Eratosthenes.
   let minNum = 1;
   let maxNum = 8388607;
@@ -268,7 +268,7 @@ const primes = (function () {
 
   // Get the twin prime numbers within the specified range
   const getPrimesTwins = (start = minNum, end = maxNum) => {
-    const primesInRange = primes.getPrimes(start, end);
+    const primesInRange = getPrimes(start, end);
     if (!primesInRange.length)
       throw new Error(
         getMsg("errNoTarget", ["prime numbers", "specified range"])
@@ -331,7 +331,7 @@ const primes = (function () {
       throw new Error(
         getMsg("errNumericRange", ["Specified number", "less", maxNum])
       );
-    if (!primes.isCoprime(a, m))
+    if (!isCoprime(a, m))
       // For relatively prime integers a and m, there always exists a multiplicative inverse.
       throw new Error(getMsg("errNotExist", ["Multiplicative inverse"]));
 
@@ -374,6 +374,3 @@ const primes = (function () {
     getRandomPrime,
   };
 })();
-
-// Export module.
-module.exports = primes;
