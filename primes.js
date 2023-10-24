@@ -112,7 +112,7 @@ module.exports = (function () {
     if (config?.minNum) {
       if (config.minNum < 1)
         throw new Error(getMsg("errNumericRange", ["MinNum", "greater", 1]));
-      if (config.minNum > maxNum)
+      if (config.minNum > config?.maxNum || !config?.maxNum && config.minNum > maxNum)
         throw new Error(getMsg("errNumericRange", ["MinNum", "less", maxNum]));
       minNum = config.minNum;
     }
