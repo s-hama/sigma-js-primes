@@ -33,6 +33,11 @@ describe("Around pre-processing and prime number generation", () => {
       expect(() => init({ minNum: 9999999999999999 })).toThrowError(
         getMsg("errNumericRange", ["MinNum", "less", 8388607])
       );
+      // msg: MinNum number must be less than or equal to 101.
+      init({ minNum: 1, maxNum: 100 });
+      expect(() => init({ minNum: 101 })).toThrowError(
+        getMsg("errNumericRange", ["MinNum", "less", getMaxNum()])
+      );
     });
     it("should throw an error for invalid maxNum", () => {
       // msg: MaxNum number must be greater than or equal to 1.
@@ -64,12 +69,14 @@ describe("Around pre-processing and prime number generation", () => {
     });
     it("should throw an error for invalid sieveType", () => {
       // msg: Please specify sieveType for eratosthenes or atkin.
-      expect(() => init({ sieveType: "other sieve" })).toThrowError(
+      expect(() =>
+        init({ minNum: 1, maxNum: 100, sieveType: "other sieve" })
+      ).toThrowError(
         getMsg("errInvalidSpecify", ["sieveType", "eratosthenes or atkin"])
       );
     });
     it("should maxNum and sieveType are updated with the specified settings", () => {
-      init({ maxNum: 100, sieveType: "atkin" });
+      init({ minNum: 1, maxNum: 100, sieveType: "atkin" });
       expect(getMaxNum()).toEqual(100);
       expect(getSieveType()).toEqual("atkin");
     });
